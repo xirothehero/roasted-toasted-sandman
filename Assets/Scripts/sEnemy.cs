@@ -16,6 +16,7 @@ public class sEnemy : MonoBehaviour
     public float damageIndicatorTime = 0.5f;
 
     public float knockBackforce = 3;
+    public GameObject itemPickupPrefab;
 
     public Transform attackPoint;
     public float attackRange = 2f;
@@ -122,6 +123,15 @@ public class sEnemy : MonoBehaviour
         }
         else
         {
+            if (itemPickupPrefab)
+            {
+                GameObject item = Instantiate(itemPickupPrefab);
+                item.transform.position = transform.position;
+            }
+            else
+            {
+                Debug.Log("Do note that you have no itemPickupPrefab on this NPC.");
+            }
             Destroy(gameObject);
         }
         

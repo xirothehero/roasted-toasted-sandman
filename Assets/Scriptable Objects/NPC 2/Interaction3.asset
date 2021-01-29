@@ -10,8 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
-  m_Name: New NPC Interaction
+  m_Name: Interaction3
   m_EditorClassIdentifier: 
-  text: 
-  replies: []
-  options: []
+  text: '"Could you please find it?"'
+  replies:
+  - {fileID: 11400000, guid: 3c5e4ea375094404089d46cf8299d660, type: 2}
+  - {fileID: 0}
+  options:
+  - Sure why not.
+  - Nah.
+  finishMonologue: 0
+  itemWanted: 
+  secondPart: {fileID: 0}
+  repeat: 0

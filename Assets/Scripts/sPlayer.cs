@@ -18,6 +18,9 @@ public class sPlayer : MonoBehaviour
     public sWeapon weapon;
     //Quaternion orgWeaponRot;
 
+    //public List<sItempickup> itemsCollected = new List<sItempickup>();
+    public List<string> itemsCollected = new List<string>();
+
     // Temporary variable until actual damage indication is implemented
     public float damageIndicatorTime = 0.5f;
 

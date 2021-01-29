@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering;
 
 public class sPlayer : MonoBehaviour
 {
     public float health = 100;
     public float speed = 8;
+    public int sand = 0;
+    public Text sandText;
     public Transform theCamera;
 
     //Temp vars like in sEnemy
@@ -25,6 +28,9 @@ public class sPlayer : MonoBehaviour
     // Jumping
     public float jumpForce = 2;
     bool isGrounded = true;
+
+
+    [HideInInspector] public bool allowInput = true; 
 
     bool atkCooldown = false;
     Animator playerAnimator;
@@ -50,29 +56,32 @@ public class sPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
-        float zInput = Input.GetAxis("Vertical");
-        float xInput = Input.GetAxis("Horizontal");
-
-
-        Rotate(xInput, zInput);
-
-        if (zInput != 0 || xInput != 0)
+        if (allowInput)
         {
-            if (zInput == 1 || zInput == -1)
-                keep = zInput;
-            transform.position += transform.forward * Time.deltaTime * speed;
-        }
+            float zInput = Input.GetAxis("Vertical");
+            float xInput = Input.GetAxis("Horizontal");
 
-        if (!atkCooldown && Input.GetMouseButton(0))
-        {
+
             Rotate(xInput, zInput);
-            Attack();
-        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y < 0)
-        {
-            Debug.Log("Jumping");
-            Jump();
+            if (zInput != 0 || xInput != 0)
+            {
+                keep = zInput;
+                //if (zInput == 1 || zInput == -1)
+                transform.position += transform.forward * Time.deltaTime * speed;
+            }
+
+            if (!atkCooldown && Input.GetMouseButton(0))
+            {
+                Rotate(xInput, zInput);
+                Attack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y < 0)
+            {
+                Debug.Log("Jumping");
+                Jump();
+            }
         }
     }
 
@@ -105,7 +114,7 @@ public class sPlayer : MonoBehaviour
         }
         else
         {
-            if (keep == 1)
+            if (keep > 0)
             {
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
             }

@@ -8,6 +8,9 @@ public class Gamemanager : MonoBehaviour
 
     public sPlayer thePlayer;
     public GameObject gameOverCanvas;
+    public sCameraFollow mainCamera;
+
+    public cButton_NPC_Interactions npcButtonManager;
 
     private void Awake()
     {

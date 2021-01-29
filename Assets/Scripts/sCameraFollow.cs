@@ -8,6 +8,12 @@ public class sCameraFollow : MonoBehaviour
     public float turnSpeed = 8;
     public float yPosOffset = 3;
 
+    public bool followPlayer = true;
+    public float cinematicSpeed = 3f;
+    public float cinematicTurnSpeed = 9f;
+    // For the use of moving the camera somewhere in the scene to a destination
+    public Transform destination;
+    public Transform lookAtTarget;
     private Vector3 offset;
     
     private void Start()
@@ -16,11 +22,21 @@ public class sCameraFollow : MonoBehaviour
     }
     void Update()
     {
-        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X")*turnSpeed, Vector3.up) * offset;
-        if (player != null)
+        if (followPlayer)
         {
-            transform.position = player.position + offset;
-            transform.LookAt(player.position);
+            offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
+            if (player != null)
+            {
+                transform.position = player.position + offset;
+                transform.LookAt(player.position);
+            }
         }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, destination.position, cinematicSpeed * Time.deltaTime);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, destination.rotation, cinematicTurnSpeed * Time.deltaTime);
+            transform.LookAt(lookAtTarget.position);
+        }
+
     }
 }

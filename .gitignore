@@ -60,3 +60,4 @@ sysinfo.txt
 crashlytics-build.properties
 
 .idea/
+ProjectSettings/Packages/com.unity.probuilder/Settings.json

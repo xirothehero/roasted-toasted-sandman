@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 1813108448908378038}
   - component: {fileID: 1813108448908378040}
   m_Layer: 0
-  m_Name: Itempickup
+  m_Name: Itempickup_Dark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1041,6 +1041,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587b157ac26c74c44ab6db0e6113de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
+  healthPickupAmount: 25
   spinSpeed: 50
   floatingSpeed: 0.5
   height: 1

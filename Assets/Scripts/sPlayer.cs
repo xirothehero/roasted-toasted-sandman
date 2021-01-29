@@ -28,6 +28,8 @@ public class sPlayer : MonoBehaviour
     public float attackRange = 2f;
     public LayerMask enemyLayers;
 
+    public Slider healthSlider;
+
     // Jumping
     public float jumpForce = 2;
     bool isGrounded = true;
@@ -65,18 +67,22 @@ public class sPlayer : MonoBehaviour
             float xInput = Input.GetAxis("Horizontal");
 
 
-            Rotate(xInput, zInput);
+            //Rotate(xInput, zInput);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
 
+            float actualSpeed = speed;
             if (zInput != 0 || xInput != 0)
             {
-                keep = zInput;
+                //keep = zInput;
                 //if (zInput == 1 || zInput == -1)
-                transform.position += transform.forward * Time.deltaTime * speed;
+                if (zInput != 0 && xInput != 0)
+                    actualSpeed /= 1.5f;
+                transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
             }
 
             if (!atkCooldown && Input.GetMouseButton(0))
             {
-                Rotate(xInput, zInput);
+                //Rotate(xInput, zInput);
                 Attack();
             }
 
@@ -101,35 +107,35 @@ public class sPlayer : MonoBehaviour
         //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
     }
 
-    void Rotate(float _xInput, float _zInput)
-    {
-        // Forward direction: camPos -> playerPos\\
-        Vector3 cameraVector = new Vector3(transform.position.x - Camera.main.transform.position.x, 0.0f,
-                                                   transform.position.z - Camera.main.transform.position.z);
+    //void Rotate(float _xInput, float _zInput)
+    //{
+    //    // Forward direction: camPos -> playerPos\\
+    //    Vector3 cameraVector = new Vector3(transform.position.x - Camera.main.transform.position.x, 0.0f,
+    //                                               transform.position.z - Camera.main.transform.position.z);
 
-        // Calculate the look direction of the player based on the input and the cameraVector
-        Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
+    //    // Calculate the look direction of the player based on the input and the cameraVector
+    //    Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
 
-        if (playerLookDirection != Vector3.zero)
-        {
-            Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
-            transform.rotation = destRot;
-        }
-        else
-        {
-            if (keep > 0)
-            {
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-            }
-            else
-            {
-                Vector3 lookPos = theCamera.position - transform.position;
-                lookPos.y = 0;
-                Quaternion rotation = Quaternion.LookRotation(lookPos);
-                transform.rotation = rotation;
-            }
-        }
-    }
+    //    if (playerLookDirection != Vector3.zero)
+    //    {
+    //        Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
+    //        transform.rotation = destRot;
+    //    }
+    //    else
+    //    {
+    //        if (keep > 0)
+    //        {
+    //            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+    //        }
+    //        else
+    //        {
+    //            Vector3 lookPos = theCamera.position - transform.position;
+    //            lookPos.y = 0;
+    //            Quaternion rotation = Quaternion.LookRotation(lookPos);
+    //            transform.rotation = rotation;
+    //        }
+    //    }
+    //}
 
     void Attack()
     {
@@ -182,12 +188,15 @@ public class sPlayer : MonoBehaviour
         }
     }
 
-
     public void TakeDamage(float _dmg)
     {
         health -= _dmg;
         if (health > 0)
         {
+            if (healthSlider)
+                healthSlider.value = health;
+            else
+                Debug.LogError("No slider attached to the healthSlider variable on the player.");
             StartCoroutine(IndicateDamage());
         }
         else

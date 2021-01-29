@@ -15,7 +15,7 @@ MonoBehaviour:
   text: '"Could you please find it?"'
   replies:
   - {fileID: 11400000, guid: 3c5e4ea375094404089d46cf8299d660, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f1e3684249cad46439254fa6fe7bae18, type: 2}
   options:
   - Sure why not.
   - Nah.
@@ -23,3 +23,4 @@ MonoBehaviour:
   itemWanted: 
   secondPart: {fileID: 0}
   repeat: 0
+  disableTheNPC: 0

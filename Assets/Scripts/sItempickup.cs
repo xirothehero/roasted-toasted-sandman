@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class sItempickup : MonoBehaviour
 {
+    [Tooltip("Do not put anything here if you plan to use it for a health pickup.")]
     public string itemName = "";
+    public int healthPickupAmount = 0;
 
     [Header("Speed")]
     public float spinSpeed = 0.3f;
@@ -47,7 +49,20 @@ public class sItempickup : MonoBehaviour
         {
             //other.gameObject.GetComponent<sPlayer>().sand+=sandGain;
             //other.gameObject.GetComponent<sPlayer>().sandText.text = "Sand: " + other.gameObject.GetComponent<sPlayer>().sand;
-            other.gameObject.GetComponent<sPlayer>().itemsCollected.Add(itemName);
+            if (itemName != "")
+                other.gameObject.GetComponent<sPlayer>().itemsCollected.Add(itemName);
+            else
+            {
+                sPlayer thePlayer = other.gameObject.GetComponent<sPlayer>();
+                if (thePlayer.health + healthPickupAmount <= 100)
+                {
+                    thePlayer.health += healthPickupAmount;
+                    if (thePlayer.healthSlider)
+                        thePlayer.healthSlider.value = thePlayer.health;
+                    else
+                        Debug.LogError("The player does not have a Slider attached to it on Health Slider");
+                }
+            }
             Destroy(gameObject);
         }
     }

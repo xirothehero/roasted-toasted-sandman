@@ -43,17 +43,30 @@ public class sPlayer : MonoBehaviour
 
     bool atkCooldown = false;
     Animator playerAnimator;
+    SpriteRenderer playerRenderer;
     Rigidbody rb;
     //float heading = 0;
     float keep = 1;
     private BoxCollider myCollider;
 
+    private bool isMoving;
+    private bool isLookingBack;
+    private bool isLookingRight;
+    private bool isAttacking;
+
     private void Start()
     {
+        playerAnimator = gameObject.GetComponent<Animator>();
+        playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        isMoving = false;
+        isLookingBack = false;
+        isLookingRight = false;
+        isAttacking = false;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -67,7 +80,12 @@ public class sPlayer : MonoBehaviour
         float zInput = Input.GetAxis("Vertical");
         float xInput = Input.GetAxis("Horizontal");
         if (allowGoingBackward)
+        {
             Rotate(xInput, zInput);
+            if (zInput < 0) isLookingBack = true;
+            else if (zInput > 0) isLookingBack = false;
+            // else if zInput is 0, we just keep isLookingBack as is
+        }
         else
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
@@ -84,6 +102,7 @@ public class sPlayer : MonoBehaviour
             //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
             //Debug.Log(transform.localEulerAngles.y);
 
+            isMoving = false;
             float actualSpeed = speed;
             if (zInput != 0 || xInput != 0)
             {
@@ -93,6 +112,11 @@ public class sPlayer : MonoBehaviour
                     Rotate(xInput, zInput);
                     keep = zInput;
                     //transform.position += transform.forward * Time.deltaTime * speed;
+
+
+                    if (zInput < 0) isLookingBack = true;
+                    else if (zInput >= 0) isLookingBack = false;
+                    // else if zInput is 0, we just keep isLookingBack as is //haha jk
                 }
                 //else
                 //{
@@ -109,9 +133,12 @@ public class sPlayer : MonoBehaviour
                     zInput = 1;
                     xInput = -xInput;
                 }
+                isMoving = (actualSpeed != 0);
                 transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
 
-
+                if (xInput < 0) isLookingRight = false;
+                else if (xInput > 0) isLookingRight = true;
+                // else if xInput is 0, we just keep isLookingRight as is
 
             }
 
@@ -119,6 +146,7 @@ public class sPlayer : MonoBehaviour
             {
                 //Rotate(xInput, zInput);
                 Attack();
+                isAttacking = true;
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
@@ -127,6 +155,11 @@ public class sPlayer : MonoBehaviour
                 Jump();
             }
         }
+
+        playerRenderer.flipX = isLookingRight;
+        playerAnimator.SetBool("IsMoving", isMoving);
+        playerAnimator.SetBool("IsFacingBack", isLookingBack);
+        playerAnimator.SetBool("IsAttacking", isAttacking);
     }
 
 
@@ -173,7 +206,7 @@ public class sPlayer : MonoBehaviour
         //    }
         //}
 
-        if (keep > 0)
+        if (keep >= 0)
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
             //Debug.Log(theCamera.eulerAngles.y);
@@ -235,6 +268,7 @@ public class sPlayer : MonoBehaviour
         {
             yield return new WaitForSeconds(attackCooldownTime);
             atkCooldown = false;
+            isAttacking = false;
             //weapon.RotateSword(false);
         }
     }

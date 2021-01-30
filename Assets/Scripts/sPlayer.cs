@@ -54,7 +54,7 @@ public class sPlayer : MonoBehaviour
     private bool isLookingRight;
     private bool isAttacking;
 
-    private void Start()
+    private void Awake()
     {
         playerAnimator = gameObject.GetComponent<Animator>();
         playerRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -67,6 +67,11 @@ public class sPlayer : MonoBehaviour
         isLookingBack = false;
         isLookingRight = false;
         isAttacking = false;
+
+        if (!playerRenderer)
+        {
+            Debug.LogError("There isn't a Sprite Renderer attached to the player");
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -131,7 +136,8 @@ public class sPlayer : MonoBehaviour
                 if (keep < 0)
                 {
                     zInput = 1;
-                    xInput = -xInput;
+                    if (zInput != 0)
+                        xInput = -xInput;
                 }
                 isMoving = (actualSpeed != 0);
                 transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
@@ -156,10 +162,14 @@ public class sPlayer : MonoBehaviour
             }
         }
 
-        playerRenderer.flipX = isLookingRight;
-        playerAnimator.SetBool("IsMoving", isMoving);
-        playerAnimator.SetBool("IsFacingBack", isLookingBack);
-        playerAnimator.SetBool("IsAttacking", isAttacking);
+        if (playerRenderer)
+        {
+            playerRenderer.flipX = isLookingRight;
+            playerAnimator.SetBool("IsMoving", isMoving);
+            playerAnimator.SetBool("IsFacingBack", isLookingBack);
+            playerAnimator.SetBool("IsAttacking", isAttacking);
+        }
+
     }
 
 
@@ -246,8 +256,11 @@ public class sPlayer : MonoBehaviour
         {
             Debug.Log("Enemy was Hit");
             sEnemy enemyScript = enemy.GetComponent<sEnemy>();
+            sRangedEnemy_v2 otherEnemy = enemy.GetComponent<sRangedEnemy_v2>();
             if (enemyScript)
                 enemyScript.TakeDamage(weapon.damage);
+            else if (otherEnemy)
+                otherEnemy.TakeDamage(weapon.damage);
         }
         StartCoroutine(AttackCooldown());
     }
@@ -282,10 +295,12 @@ public class sPlayer : MonoBehaviour
                 healthSlider.value = health;
             else
                 Debug.LogError("No slider attached to the healthSlider variable on the player.");
-            StartCoroutine(IndicateDamage());
+            //StartCoroutine(IndicateDamage());
         }
         else
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             Time.timeScale = 0;
             Gamemanager.instance.gameOverCanvas.SetActive(true);
         }
@@ -293,19 +308,19 @@ public class sPlayer : MonoBehaviour
     }
 
     // Temporary to show damage
-    IEnumerator IndicateDamage()
-    {
-        Color orgColor = gameObject.GetComponent<Renderer>().material.color;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
-        bool wait = true;
-        while (wait)
-        {
-            yield return new WaitForSeconds(damageIndicatorTime);
-            wait = false;
-        }
-        //myCollider.enabled = false;
-        gameObject.GetComponent<Renderer>().material.color = orgColor;
-    }
+    //IEnumerator IndicateDamage()
+    //{
+    //    Color orgColor = gameObject.GetComponent<Renderer>().material.color;
+    //    gameObject.GetComponent<Renderer>().material.color = Color.red;
+    //    bool wait = true;
+    //    while (wait)
+    //    {
+    //        yield return new WaitForSeconds(damageIndicatorTime);
+    //        wait = false;
+    //    }
+    //    //myCollider.enabled = false;
+    //    gameObject.GetComponent<Renderer>().material.color = orgColor;
+    //}
 }   
 
 //    private void OnTriggerEnter(Collider other)

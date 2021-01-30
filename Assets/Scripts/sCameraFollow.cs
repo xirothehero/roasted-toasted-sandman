@@ -60,7 +60,7 @@ public class sCameraFollow : MonoBehaviour
             //}
             if (!Physics.Linecast(transform.position, transform.position + transform.localRotation * camera_offset, out hit))
             {
-                Debug.Log("Jittering?");
+                //Debug.Log("Jittering?");
                 cameraObj.localPosition = Vector3.Lerp(cameraObj.localPosition, camera_offset, Time.deltaTime);
             }
             transform.position = playerObj.position;

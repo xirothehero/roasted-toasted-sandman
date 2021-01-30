@@ -19,6 +19,7 @@ public class sInteractableNPC : MonoBehaviour
     public bool repeat = true;
     public Text spaceToAdvanceText;
     public bool disableInteraction = false;
+    public GameObject objectBlockingPath;
 
     [Tooltip("Make sure to put this on an NPC that is meant to block the path.")]
     public Transform blockingNPCDestination;
@@ -26,6 +27,7 @@ public class sInteractableNPC : MonoBehaviour
     [HideInInspector] public NPCInteractions curModule;
     private bool isEnabled = false;
     private bool animOn = false;
+    private bool gotItemWanted = false;
     private NavMeshAgent npcAgent;
     //private IEnumerator coroutine;
     [HideInInspector] public bool interacting = false;
@@ -75,6 +77,9 @@ public class sInteractableNPC : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 npcInteractionHolder.holder.gameObject.SetActive(true);
                 interactionHUD.SetActive(false);
                 Gamemanager.instance.thePlayer.allowInput = false;
@@ -157,16 +162,17 @@ public class sInteractableNPC : MonoBehaviour
             {
                 if (curModule.itemWanted != "")
                 {
-                    bool hasIt = false;
+                    //wantsSomething = true;
+                    //bool hasIt = false;
                     for (int i = 0; i < Gamemanager.instance.thePlayer.itemsCollected.Count; i++)
                     {
                         if (Gamemanager.instance.thePlayer.itemsCollected[i] == curModule.itemWanted)
                         {
-                            hasIt = true;
+                            gotItemWanted = true;
                         }
                     }
 
-                    if (hasIt)
+                    if (gotItemWanted)
                         GoToNextModule(curModule.replies[0]);
                     else if (curModule.replies.Length > 1)
                         GoToNextModule(curModule.replies[1]);
@@ -193,6 +199,14 @@ public class sInteractableNPC : MonoBehaviour
         Gamemanager.instance.mainCamera.followPlayer = true;
         Gamemanager.instance.thePlayer.allowInput = true;
         interacting = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (gotItemWanted)
+        {
+            Destroy(objectBlockingPath);
+        }
 
         if (curModule.disableTheNPC)
         {

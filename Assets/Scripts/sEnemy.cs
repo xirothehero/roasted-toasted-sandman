@@ -141,7 +141,7 @@ public class sEnemy : MonoBehaviour
 
     void KnockBack()
     {
-        rb.AddForce(new Vector3(-transform.forward.x,transform.position.y*3,-transform.forward.z) * knockBackforce, ForceMode.Impulse);
+        //rb.AddForce(new Vector3(-transform.forward.x,transform.position.y*3,-transform.forward.z) * knockBackforce, ForceMode.Impulse);
     }
     
     // Temporary to show damage

@@ -43,9 +43,9 @@ public class sRangedEnemy_v2 : MonoBehaviour
             else
             {
                 myAgent.isStopped = true;
-                Quaternion lookRotation = Quaternion.LookRotation(thePlayer.position);
+                Vector3 relativePos = thePlayer.position - transform.position;
+                Quaternion lookRotation = Quaternion.LookRotation(relativePos, Vector3.up);
                 // Rotate towards the player 
-
                     Debug.Log("Rotating towards player");
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, rotationSpeed);
                 // Rotate weapon rowards the player

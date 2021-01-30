@@ -47,22 +47,23 @@ public class sCameraFollow : MonoBehaviour
             //}
 
             camRot.x += Input.GetAxis("Mouse Y") * inputSensitivity * Time.deltaTime;
-            camRot.y += Input.GetAxis("Mouse X") * inputSensitivity * Time.deltaTime;
+            camRot.y += Input.GetAxis("Mouse X") *inputSensitivity *Time.deltaTime;
 
             camRot.x = Mathf.Clamp(camRot.x, -turnAngleMinMax, turnAngleMinMax);
 
             transform.localRotation = Quaternion.Euler(camRot.x, camRot.y, camRot.z);
 
-            if (Physics.Linecast(transform.position, transform.position + transform.localRotation * camera_offset, out hit))
-            {
-                Debug.Log("Hit wall");
-                cameraObj.localPosition = new Vector3(0, 0, Vector3.Distance(transform.position, hit.point));
-            }
-            else
+            //if ()
+            //{
+                //Debug.Log("Hit wall");
+                //cameraObj.localPosition = new Vector3(0, 0, Vector3.Distance(transform.position, hit.point));
+            //}
+            if (!Physics.Linecast(transform.position, transform.position + transform.localRotation * camera_offset, out hit))
             {
                 Debug.Log("Jittering?");
                 cameraObj.localPosition = Vector3.Lerp(cameraObj.localPosition, camera_offset, Time.deltaTime);
             }
+            transform.position = playerObj.position;
 
         }
         else

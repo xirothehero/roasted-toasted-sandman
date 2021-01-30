@@ -30,6 +30,8 @@ public class sPlayer : MonoBehaviour
 
     public bool allowGoingBackward = false;
 
+    public float rotationSpeed = 2f;
+
     public Slider healthSlider;
 
     // Jumping
@@ -68,11 +70,7 @@ public class sPlayer : MonoBehaviour
             Rotate(xInput, zInput);
         else
         {
-            //Debug.Log(theCamera.localRotation.y);
-            //transform.localRotation = Quaternion.Euler(0, theCamera.localRotation.y, 0);
-            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-            //transform.rotation = Quaternion.LookRotation(theCamera.forward);
-            //transform.Rotate(0,Input.GetAxis("Mouse X") * theCamera.GetComponent<sCameraFollow>().inputSensitivity/80,0);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
         }
     }
 
@@ -103,8 +101,14 @@ public class sPlayer : MonoBehaviour
                 //    transform.position += (transform.forward + transform.right * xInput) * Time.deltaTime * actualSpeed;
                 //}
 
+
                 if (zInput == 1 || zInput == -1)
                     actualSpeed /= 1.5f;
+                if (keep < 0)
+                {
+                    zInput = 1;
+                    xInput = -xInput;
+                }
                 transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
 
 
@@ -172,13 +176,12 @@ public class sPlayer : MonoBehaviour
         if (keep > 0)
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-            Debug.Log(theCamera.localEulerAngles.y);
             //Debug.Log(theCamera.eulerAngles.y);
         }
         else
         {
             //Debug.Log("Rotating towards camera.");
-            Vector3 lookPos = theCamera.position - transform.position;
+            Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = rotation;

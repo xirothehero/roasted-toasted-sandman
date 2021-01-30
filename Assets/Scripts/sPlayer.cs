@@ -28,6 +28,8 @@ public class sPlayer : MonoBehaviour
     public float attackRange = 2f;
     public LayerMask enemyLayers;
 
+    public bool allowGoingBackward = false;
+
     public Slider healthSlider;
 
     // Jumping
@@ -48,16 +50,31 @@ public class sPlayer : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        isGrounded = true;
     }
 
+
+    private void Update()
+    {
+        float zInput = Input.GetAxis("Vertical");
+        float xInput = Input.GetAxis("Horizontal");
+        if (allowGoingBackward)
+            Rotate(xInput, zInput);
+        else
+        {
+            //Debug.Log(theCamera.localRotation.y);
+            //transform.localRotation = Quaternion.Euler(0, theCamera.localRotation.y, 0);
+            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            //transform.rotation = Quaternion.LookRotation(theCamera.forward);
+            //transform.Rotate(0,Input.GetAxis("Mouse X") * theCamera.GetComponent<sCameraFollow>().inputSensitivity/80,0);
+        }
+    }
 
     void FixedUpdate()
     {
@@ -66,18 +83,32 @@ public class sPlayer : MonoBehaviour
             float zInput = Input.GetAxis("Vertical");
             float xInput = Input.GetAxis("Horizontal");
 
-
-            //Rotate(xInput, zInput);
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            //Debug.Log(transform.localEulerAngles.y);
 
             float actualSpeed = speed;
             if (zInput != 0 || xInput != 0)
             {
-                //keep = zInput;
-                //if (zInput == 1 || zInput == -1)
-                if (zInput != 0 && xInput != 0)
+                // Uncomment this as well to rotate behind.
+                if (allowGoingBackward)
+                {
+                    Rotate(xInput, zInput);
+                    keep = zInput;
+                    //transform.position += transform.forward * Time.deltaTime * speed;
+                }
+                //else
+                //{
+                //    if (zInput == 1 || zInput == -1)
+                //        actualSpeed /= 1.5f;
+                //    transform.position += (transform.forward + transform.right * xInput) * Time.deltaTime * actualSpeed;
+                //}
+
+                if (zInput == 1 || zInput == -1)
                     actualSpeed /= 1.5f;
                 transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
+
+
+
             }
 
             if (!atkCooldown && Input.GetMouseButton(0))
@@ -86,7 +117,7 @@ public class sPlayer : MonoBehaviour
                 Attack();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y < 0)
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
             {
                 Debug.Log("Jumping");
                 Jump();
@@ -107,35 +138,52 @@ public class sPlayer : MonoBehaviour
         //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
     }
 
-    //void Rotate(float _xInput, float _zInput)
-    //{
-    //    // Forward direction: camPos -> playerPos\\
-    //    Vector3 cameraVector = new Vector3(transform.position.x - Camera.main.transform.position.x, 0.0f,
-    //                                               transform.position.z - Camera.main.transform.position.z);
+    void Rotate(float _xInput, float _zInput)
+    {
+        // Forward direction: camPos -> playerPos\\
+        Vector3 cameraVector = new Vector3(transform.position.x - theCamera.position.x, 0.0f,
+                                                   transform.position.z - theCamera.position.z);
 
-    //    // Calculate the look direction of the player based on the input and the cameraVector
-    //    Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
+        // Calculate the look direction of the player based on the input and the cameraVector
+        //Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
 
-    //    if (playerLookDirection != Vector3.zero)
-    //    {
-    //        Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
-    //        transform.rotation = destRot;
-    //    }
-    //    else
-    //    {
-    //        if (keep > 0)
-    //        {
-    //            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-    //        }
-    //        else
-    //        {
-    //            Vector3 lookPos = theCamera.position - transform.position;
-    //            lookPos.y = 0;
-    //            Quaternion rotation = Quaternion.LookRotation(lookPos);
-    //            transform.rotation = rotation;
-    //        }
-    //    }
-    //}
+        //if (playerLookDirection != Vector3.zero)
+        //{
+        //    Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
+        //    transform.rotation = destRot;
+        //}
+        //else
+        //{
+        //    if (keep > 0)
+        //    {
+        //        transform.rotation = Quaternion.Euler(0,theCamera.rotation.y, 0);
+        //        //Debug.Log(theCamera.eulerAngles.y);
+        //    }
+        //    else
+        //    {
+        //        //Debug.Log("Rotating towards camera.");
+        //        Vector3 lookPos = theCamera.position - transform.position;
+        //        lookPos.y = 0;
+        //        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        //        transform.rotation = rotation;
+        //    }
+        //}
+
+        if (keep > 0)
+        {
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            Debug.Log(theCamera.localEulerAngles.y);
+            //Debug.Log(theCamera.eulerAngles.y);
+        }
+        else
+        {
+            //Debug.Log("Rotating towards camera.");
+            Vector3 lookPos = theCamera.position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
+        }
+    }
 
     void Attack()
     {

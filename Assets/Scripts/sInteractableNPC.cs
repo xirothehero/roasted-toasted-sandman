@@ -20,7 +20,8 @@ public class sInteractableNPC : MonoBehaviour
     public Text spaceToAdvanceText;
     public bool disableInteraction = false;
 
-    public Transform destination;
+    [Tooltip("Make sure to put this on an NPC that is meant to block the path.")]
+    public Transform blockingNPCDestination;
 
     [HideInInspector] public NPCInteractions curModule;
     private bool isEnabled = false;
@@ -196,6 +197,7 @@ public class sInteractableNPC : MonoBehaviour
         if (curModule.disableTheNPC)
         {
             disableInteraction = true;
+            npcAgent.destination = blockingNPCDestination.position;
         }
         if (curModule.repeat)
         {

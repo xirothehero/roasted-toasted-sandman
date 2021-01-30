@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class sInteractableNPC : MonoBehaviour
@@ -17,16 +18,25 @@ public class sInteractableNPC : MonoBehaviour
     public NPCInteractions startingModule;
     public bool repeat = true;
     public Text spaceToAdvanceText;
+    public bool disableInteraction = false;
+    public GameObject objectBlockingPath;
+
+    [Tooltip("Make sure to put this on an NPC that is meant to block the path.")]
+    public Transform blockingNPCDestination;
 
     [HideInInspector] public NPCInteractions curModule;
     private bool isEnabled = false;
     private bool animOn = false;
+    private bool gotItemWanted = false;
+    private NavMeshAgent npcAgent;
     //private IEnumerator coroutine;
     [HideInInspector] public bool interacting = false;
     private bool skipped = false;
 
     private void Start()
     {
+
+        npcAgent = gameObject.GetComponent<NavMeshAgent>();
         curModule = startingModule;
     }
 
@@ -67,6 +77,9 @@ public class sInteractableNPC : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 npcInteractionHolder.holder.gameObject.SetActive(true);
                 interactionHUD.SetActive(false);
                 Gamemanager.instance.thePlayer.allowInput = false;
@@ -90,7 +103,7 @@ public class sInteractableNPC : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !disableInteraction)
         {
             isEnabled = true;
             interactionHUD.SetActive(true);
@@ -104,7 +117,8 @@ public class sInteractableNPC : MonoBehaviour
         {
             isEnabled = false;
             interactionHUD.SetActive(false);
-            exclamationPoint.SetActive(true);
+            if (!disableInteraction)
+                exclamationPoint.SetActive(true);
         }
     }
 
@@ -133,7 +147,7 @@ public class sInteractableNPC : MonoBehaviour
             npcInteractionHolder.EnableButtonsAndTexts(curModule.options);
             //npcInteractionHolder.SetText(curModule.options.Length, curModule.options);
         }
-        else if (curModule.replies.Length == 1)
+        else if (curModule.replies.Length > 0 || curModule.finishMonologue)
         {
             yield return new WaitForSeconds(1.5f);
             bool pressed = false;
@@ -143,8 +157,70 @@ public class sInteractableNPC : MonoBehaviour
                     pressed = true;
                 yield return new WaitForEndOfFrame();
             }
+            // If we're not finished with the interaction
+            if (!curModule.finishMonologue)
+            {
+                if (curModule.itemWanted != "")
+                {
+                    //wantsSomething = true;
+                    //bool hasIt = false;
+                    for (int i = 0; i < Gamemanager.instance.thePlayer.itemsCollected.Count; i++)
+                    {
+                        if (Gamemanager.instance.thePlayer.itemsCollected[i] == curModule.itemWanted)
+                        {
+                            gotItemWanted = true;
+                        }
+                    }
 
-            GoToNextModule(curModule.replies[0]);
+                    if (gotItemWanted)
+                        GoToNextModule(curModule.replies[0]);
+                    else if (curModule.replies.Length > 1)
+                        GoToNextModule(curModule.replies[1]);
+                    else
+                        FinishInteraction();
+                }
+                else
+                    GoToNextModule(curModule.replies[0]);
+            }
+            else
+                FinishInteraction();
+        }
+        else
+        {
+            Debug.LogError("You need to add replies or set this module to finishMonologue via enabling the boolean.");
+        }
+    }
+
+    public void FinishInteraction()
+    {
+        npcInteractionHolder.holder.SetActive(false);
+        if (!disableInteraction)
+            interactionHUD.SetActive(true);
+        Gamemanager.instance.mainCamera.followPlayer = true;
+        Gamemanager.instance.thePlayer.allowInput = true;
+        interacting = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (gotItemWanted)
+        {
+            Destroy(objectBlockingPath);
+        }
+
+        if (curModule.disableTheNPC)
+        {
+            disableInteraction = true;
+            npcAgent.destination = blockingNPCDestination.position;
+        }
+        if (curModule.repeat)
+        {
+            curModule = startingModule;
+        }
+        else if (curModule.secondPart)
+        {
+            startingModule = curModule.secondPart;
+            curModule = curModule.secondPart;
         }
     }
 }

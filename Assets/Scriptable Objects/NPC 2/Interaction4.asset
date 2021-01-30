@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
-  m_Name: New NPC Interaction
+  m_Name: Interaction4
   m_EditorClassIdentifier: 
-  text: 
+  text: '"Oh thank you!"'
   replies: []
   options: []
+  finishMonologue: 1
+  itemWanted: 
+  secondPart: {fileID: 11400000, guid: 14fc44e3893afc442916056df23ef4fb, type: 2}
+  repeat: 0

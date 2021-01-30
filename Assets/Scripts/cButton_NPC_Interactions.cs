@@ -14,9 +14,9 @@ public class cButton_NPC_Interactions : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Started");
+        //Debug.Log("Started");
         interactionButtonsText = new Text[interactionButtons.Length];
-        Debug.Log(interactionButtonsText.Length);
+        //Debug.Log(interactionButtonsText.Length);
         for (int i = 0; i < interactionButtonsText.Length; i++)
         {
             interactionButtonsText[i] = interactionButtons[i].transform.GetChild(0).GetComponent<Text>();
@@ -32,13 +32,7 @@ public class cButton_NPC_Interactions : MonoBehaviour
         }
         else
         {
-            holder.SetActive(false);
-            curNPC.interactionHUD.SetActive(true);
-            Gamemanager.instance.mainCamera.followPlayer = true;
-            Gamemanager.instance.thePlayer.allowInput = true;
-            curNPC.interacting = false;
-            if (curNPC.repeat)
-                curNPC.curModule = curNPC.startingModule;
+            curNPC.FinishInteraction();
         }
 
     }
@@ -57,8 +51,8 @@ public class cButton_NPC_Interactions : MonoBehaviour
         {
             for (int i = 0; i < _options.Length; i++)
             {
-                Debug.Log("Enabling buttons");
-                Debug.Log(interactionButtons[i].name);
+                //Debug.Log("Enabling buttons");
+                //Debug.Log(interactionButtons[i].name);
                 interactionButtons[i].SetActive(true);
                 interactionButtonsText[i].text = _options[i];
             }

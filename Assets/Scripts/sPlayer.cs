@@ -18,12 +18,21 @@ public class sPlayer : MonoBehaviour
     public sWeapon weapon;
     //Quaternion orgWeaponRot;
 
+    //public List<sItempickup> itemsCollected = new List<sItempickup>();
+    public List<string> itemsCollected = new List<string>();
+
     // Temporary variable until actual damage indication is implemented
     public float damageIndicatorTime = 0.5f;
 
     public Transform attackPoint;
     public float attackRange = 2f;
     public LayerMask enemyLayers;
+
+    public bool allowGoingBackward = false;
+
+    public float rotationSpeed = 2f;
+
+    public Slider healthSlider;
 
     // Jumping
     public float jumpForce = 2;
@@ -34,25 +43,54 @@ public class sPlayer : MonoBehaviour
 
     bool atkCooldown = false;
     Animator playerAnimator;
+    SpriteRenderer playerRenderer;
     Rigidbody rb;
     //float heading = 0;
     float keep = 1;
     private BoxCollider myCollider;
 
+    private bool isMoving;
+    private bool isLookingBack;
+    private bool isLookingRight;
+    private bool isAttacking;
+
     private void Start()
     {
+        playerAnimator = gameObject.GetComponent<Animator>();
+        playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        isMoving = false;
+        isLookingBack = false;
+        isLookingRight = false;
+        isAttacking = false;
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        isGrounded = true;
     }
 
+
+    private void Update()
+    {
+        float zInput = Input.GetAxis("Vertical");
+        float xInput = Input.GetAxis("Horizontal");
+        if (allowGoingBackward)
+        {
+            Rotate(xInput, zInput);
+            if (zInput < 0) isLookingBack = true;
+            else if (zInput > 0) isLookingBack = false;
+            // else if zInput is 0, we just keep isLookingBack as is
+        }
+        else
+        {
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+        }
+    }
 
     void FixedUpdate()
     {
@@ -61,28 +99,67 @@ public class sPlayer : MonoBehaviour
             float zInput = Input.GetAxis("Vertical");
             float xInput = Input.GetAxis("Horizontal");
 
+            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            //Debug.Log(transform.localEulerAngles.y);
 
-            Rotate(xInput, zInput);
-
+            isMoving = false;
+            float actualSpeed = speed;
             if (zInput != 0 || xInput != 0)
             {
-                keep = zInput;
-                //if (zInput == 1 || zInput == -1)
-                transform.position += transform.forward * Time.deltaTime * speed;
+                // Uncomment this as well to rotate behind.
+                if (allowGoingBackward)
+                {
+                    Rotate(xInput, zInput);
+                    keep = zInput;
+                    //transform.position += transform.forward * Time.deltaTime * speed;
+
+
+                    if (zInput < 0) isLookingBack = true;
+                    else if (zInput >= 0) isLookingBack = false;
+                    // else if zInput is 0, we just keep isLookingBack as is //haha jk
+                }
+                //else
+                //{
+                //    if (zInput == 1 || zInput == -1)
+                //        actualSpeed /= 1.5f;
+                //    transform.position += (transform.forward + transform.right * xInput) * Time.deltaTime * actualSpeed;
+                //}
+
+
+                if (zInput == 1 || zInput == -1)
+                    actualSpeed /= 1.5f;
+                if (keep < 0)
+                {
+                    zInput = 1;
+                    xInput = -xInput;
+                }
+                isMoving = (actualSpeed != 0);
+                transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
+
+                if (xInput < 0) isLookingRight = false;
+                else if (xInput > 0) isLookingRight = true;
+                // else if xInput is 0, we just keep isLookingRight as is
+
             }
 
             if (!atkCooldown && Input.GetMouseButton(0))
             {
-                Rotate(xInput, zInput);
+                //Rotate(xInput, zInput);
                 Attack();
+                isAttacking = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y < 0)
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
             {
                 Debug.Log("Jumping");
                 Jump();
             }
         }
+
+        playerRenderer.flipX = isLookingRight;
+        playerAnimator.SetBool("IsMoving", isMoving);
+        playerAnimator.SetBool("IsFacingBack", isLookingBack);
+        playerAnimator.SetBool("IsAttacking", isAttacking);
     }
 
 
@@ -101,30 +178,46 @@ public class sPlayer : MonoBehaviour
     void Rotate(float _xInput, float _zInput)
     {
         // Forward direction: camPos -> playerPos\\
-        Vector3 cameraVector = new Vector3(transform.position.x - Camera.main.transform.position.x, 0.0f,
-                                                   transform.position.z - Camera.main.transform.position.z);
+        Vector3 cameraVector = new Vector3(transform.position.x - theCamera.position.x, 0.0f,
+                                                   transform.position.z - theCamera.position.z);
 
         // Calculate the look direction of the player based on the input and the cameraVector
-        Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
+        //Vector3 playerLookDirection = Quaternion.LookRotation(cameraVector) * new Vector3(_xInput, 0.0f, _zInput);
 
-        if (playerLookDirection != Vector3.zero)
+        //if (playerLookDirection != Vector3.zero)
+        //{
+        //    Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
+        //    transform.rotation = destRot;
+        //}
+        //else
+        //{
+        //    if (keep > 0)
+        //    {
+        //        transform.rotation = Quaternion.Euler(0,theCamera.rotation.y, 0);
+        //        //Debug.Log(theCamera.eulerAngles.y);
+        //    }
+        //    else
+        //    {
+        //        //Debug.Log("Rotating towards camera.");
+        //        Vector3 lookPos = theCamera.position - transform.position;
+        //        lookPos.y = 0;
+        //        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        //        transform.rotation = rotation;
+        //    }
+        //}
+
+        if (keep >= 0)
         {
-            Quaternion destRot = Quaternion.LookRotation(playerLookDirection);
-            transform.rotation = destRot;
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
+            //Debug.Log(theCamera.eulerAngles.y);
         }
         else
         {
-            if (keep > 0)
-            {
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-            }
-            else
-            {
-                Vector3 lookPos = theCamera.position - transform.position;
-                lookPos.y = 0;
-                Quaternion rotation = Quaternion.LookRotation(lookPos);
-                transform.rotation = rotation;
-            }
+            //Debug.Log("Rotating towards camera.");
+            Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
         }
     }
 
@@ -175,16 +268,20 @@ public class sPlayer : MonoBehaviour
         {
             yield return new WaitForSeconds(attackCooldownTime);
             atkCooldown = false;
+            isAttacking = false;
             //weapon.RotateSword(false);
         }
     }
-
 
     public void TakeDamage(float _dmg)
     {
         health -= _dmg;
         if (health > 0)
         {
+            if (healthSlider)
+                healthSlider.value = health;
+            else
+                Debug.LogError("No slider attached to the healthSlider variable on the player.");
             StartCoroutine(IndicateDamage());
         }
         else

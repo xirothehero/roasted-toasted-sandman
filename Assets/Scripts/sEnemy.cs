@@ -12,10 +12,13 @@ public class sEnemy : MonoBehaviour
 
     public float rotationSpeed = 3f;
 
+    public float distanceToAttack = 2.5f;
+
     // Temp var until actual damage indication is impemented
     public float damageIndicatorTime = 0.5f;
 
     public float knockBackforce = 3;
+    public GameObject itemPickupPrefab;
 
     public Transform attackPoint;
     public float attackRange = 2f;
@@ -47,7 +50,7 @@ public class sEnemy : MonoBehaviour
             //transform.LookAt(thePlayer.transform.position);
             Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(thePlayer.position), attackRange);
             myAgent.destination = thePlayer.position;
-            if (myAgent.remainingDistance <= 2.5f)
+            if (myAgent.remainingDistance <= distanceToAttack)
             {
                 myAgent.isStopped = true;
                 if (!atkCooldown)
@@ -67,7 +70,7 @@ public class sEnemy : MonoBehaviour
         }
     }
 
-    void Attack()
+    public virtual void Attack()
     {
         // If it exists
 
@@ -122,6 +125,15 @@ public class sEnemy : MonoBehaviour
         }
         else
         {
+            if (itemPickupPrefab)
+            {
+                GameObject item = Instantiate(itemPickupPrefab);
+                item.transform.position = transform.position;
+            }
+            else
+            {
+                Debug.Log("Do note that you have no itemPickupPrefab on this NPC.");
+            }
             Destroy(gameObject);
         }
         
@@ -129,7 +141,7 @@ public class sEnemy : MonoBehaviour
 
     void KnockBack()
     {
-        rb.AddForce(new Vector3(-transform.forward.x,transform.position.y*3,-transform.forward.z) * knockBackforce, ForceMode.Impulse);
+        //rb.AddForce(new Vector3(-transform.forward.x,transform.position.y*3,-transform.forward.z) * knockBackforce, ForceMode.Impulse);
     }
     
     // Temporary to show damage

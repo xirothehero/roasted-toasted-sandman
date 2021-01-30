@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
+  m_Name: Interaction7
+  m_EditorClassIdentifier: 
+  text: '"Wait you''re reconsidering :D?"'
+  replies:
+  - {fileID: 11400000, guid: 3c5e4ea375094404089d46cf8299d660, type: 2}
+  - {fileID: 11400000, guid: f1e3684249cad46439254fa6fe7bae18, type: 2}
+  options:
+  - Yeah I'll go do it.
+  - No, just accidently hit the button.
+  finishMonologue: 0
+  itemWanted: 
+  secondPart: {fileID: 0}
+  repeat: 0
+  disableTheNPC: 0

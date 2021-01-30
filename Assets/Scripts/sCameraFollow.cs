@@ -4,32 +4,67 @@ using UnityEngine;
 
 public class sCameraFollow : MonoBehaviour
 {
-    public Transform player;
-    public float turnSpeed = 8;
+    public Transform cameraFollowObj;
+    public Transform cameraObj;
+    public Transform playerObj;
+    public float inputSensitivity = 5;
     public float yPosOffset = 3;
 
     public bool followPlayer = true;
     public float cinematicSpeed = 3f;
     public float cinematicTurnSpeed = 9f;
     // For the use of moving the camera somewhere in the scene to a destination
+
+
+    public float turnAngleMinMax = 80;
+
+    [Header("Cinematics")]
     public Transform destination;
     public Transform lookAtTarget;
+    //public float maxDistance = 5f;
+    //public float minDistance = 0.75f;
     private Vector3 offset;
-    
+    private Quaternion camRot;
+
+    private RaycastHit hit;
+    private Vector3 camera_offset;
+
     private void Start()
     {
-        offset = new Vector3(player.position.x, player.position.y + yPosOffset, player.position.z - Vector3.Distance(transform.position, player.position));
+        camRot = transform.localRotation;
+        camera_offset = cameraObj.localPosition;
     }
+
     void Update()
     {
         if (followPlayer)
         {
-            offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
-            if (player != null)
+            //transform.position = new Vector3(cameraFollowObj.position.x, cameraFollowObj.position.y + yPosOffset, cameraFollowObj.position.z);
+            //transform.Rotate(0, Input.GetAxis("Mouse X") * inputSensitivity, 0);
+            //if (transform.rotation.x > -turnAngleMinMax && transform.rotation.x < turnAngleMinMax)
+            //{
+            //    transform.Rotate(Input.GetAxis("Mouse Y") * inputSensitivity, 0, 0);
+            //}
+
+            camRot.x += Input.GetAxis("Mouse Y") * inputSensitivity * Time.deltaTime;
+            camRot.y += Input.GetAxis("Mouse X") *inputSensitivity *Time.deltaTime;
+
+            camRot.x = Mathf.Clamp(camRot.x, -turnAngleMinMax, turnAngleMinMax);
+
+            transform.localRotation = Quaternion.Euler(camRot.x, camRot.y, camRot.z);
+
+            //if ()
+            //{
+                //Debug.Log("Hit wall");
+                //cameraObj.localPosition = new Vector3(0, 0, Vector3.Distance(transform.position, hit.point));
+            //}
+            if (!Physics.Linecast(transform.position, transform.position + transform.localRotation * camera_offset, out hit))
             {
-                transform.position = player.position + offset;
-                transform.LookAt(player.position);
+                Debug.Log("Jittering?");
+                cameraObj.localPosition = Vector3.Lerp(cameraObj.localPosition, camera_offset, Time.deltaTime);
             }
+            transform.position = playerObj.position;
+
         }
         else
         {
@@ -39,4 +74,11 @@ public class sCameraFollow : MonoBehaviour
         }
 
     }
+
+    //private void FixedUpdate()
+    //{
+    //    if (followPlayer)
+    //        transform.position = playerObj.position;
+    //}
+
 }

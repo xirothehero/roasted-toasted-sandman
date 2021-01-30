@@ -12,6 +12,8 @@ public class sEnemy : MonoBehaviour
 
     public float rotationSpeed = 3f;
 
+    public float distanceToAttack = 2.5f;
+
     // Temp var until actual damage indication is impemented
     public float damageIndicatorTime = 0.5f;
 
@@ -48,7 +50,7 @@ public class sEnemy : MonoBehaviour
             //transform.LookAt(thePlayer.transform.position);
             Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(thePlayer.position), attackRange);
             myAgent.destination = thePlayer.position;
-            if (myAgent.remainingDistance <= 2.5f)
+            if (myAgent.remainingDistance <= distanceToAttack)
             {
                 myAgent.isStopped = true;
                 if (!atkCooldown)
@@ -68,7 +70,7 @@ public class sEnemy : MonoBehaviour
         }
     }
 
-    void Attack()
+    public virtual void Attack()
     {
         // If it exists
 

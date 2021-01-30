@@ -49,6 +49,50 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &4226636508065861578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6242122204007920146}
+  - component: {fileID: 4774178588063352319}
+  m_Layer: 8
+  m_Name: TargetRadius
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6242122204007920146
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226636508065861578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7340190217028676740}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4774178588063352319
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226636508065861578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7340190216350273555
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +266,6 @@ GameObject:
   - component: {fileID: 7340190217028676792}
   - component: {fileID: -1431510368153114890}
   - component: {fileID: -1322829706053394881}
-  - component: {fileID: 5731771119921080028}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -245,6 +288,7 @@ Transform:
   - {fileID: 7340190216350273554}
   - {fileID: 1968536542821609485}
   - {fileID: 3294235271910012719}
+  - {fileID: 6242122204007920146}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -325,6 +369,7 @@ MonoBehaviour:
   attackCooldownTime: 1
   myWeapon: {fileID: 1968536541966995204}
   rotationSpeed: 1.5
+  distanceToAttack: 2.5
   damageIndicatorTime: 0.5
   knockBackforce: 3
   itemPickupPrefab: {fileID: 1813108448908378037, guid: 8a7110ad76de58347b5fb9c5257c48d1,
@@ -372,19 +417,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &5731771119921080028
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7340190217028676793}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5901992053960544181
 PrefabInstance:
   m_ObjectHideFlags: 0

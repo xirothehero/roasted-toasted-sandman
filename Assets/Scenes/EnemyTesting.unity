@@ -229,7 +229,7 @@ PrefabInstance:
         type: 3}
       propertyPath: theCamera
       value: 
-      objectReference: {fileID: 1213021528}
+      objectReference: {fileID: 1968473500}
     - target: {fileID: 336104699705259949, guid: 80df27187de58ac458d78615f7166038,
         type: 3}
       propertyPath: m_RootOrder
@@ -238,7 +238,7 @@ PrefabInstance:
     - target: {fileID: 336104699705259949, guid: 80df27187de58ac458d78615f7166038,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.8316231
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 336104699705259949, guid: 80df27187de58ac458d78615f7166038,
         type: 3}
@@ -248,7 +248,7 @@ PrefabInstance:
     - target: {fileID: 336104699705259949, guid: 80df27187de58ac458d78615f7166038,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.03
+      value: 15.529062
       objectReference: {fileID: 0}
     - target: {fileID: 336104699705259949, guid: 80df27187de58ac458d78615f7166038,
         type: 3}
@@ -418,17 +418,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1213021524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e02016a36261d4a8b58e04adf85ed7, type: 3}
+  m_Script: {fileID: 11500000, guid: d5ae5446c6b889247b83203e01314478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1251342836}
-  turnSpeed: 8
-  yPosOffset: 3
-  followPlayer: 1
-  cinematicSpeed: 12
-  cinematicTurnSpeed: 50
-  destination: {fileID: 0}
-  lookAtTarget: {fileID: 0}
+  minDistance: 1
+  maxDistance: 5
+  smooth: 10
+  dollyDirAdjusted: {x: 0, y: 0, z: 0}
+  distance: 5
 --- !u!81 &1213021526
 AudioListener:
   m_ObjectHideFlags: 0
@@ -487,12 +484,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213021524}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -6}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 1968473500}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1251342836 stripped
 Transform:
@@ -500,6 +497,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 750234597}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1968473498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968473500}
+  - component: {fileID: 1968473499}
+  m_Layer: 0
+  m_Name: Camera holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1968473499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968473498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e02016a36261d4a8b58e04adf85ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraFollowObj: {fileID: 1251342836}
+  cameraObj: {fileID: 1968473500}
+  playerObj: {fileID: 1251342836}
+  inputSensitivity: 200
+  yPosOffset: 3
+  followPlayer: 1
+  cinematicSpeed: 3
+  cinematicTurnSpeed: 9
+  turnAngleMinMax: 80
+  destination: {fileID: 0}
+  lookAtTarget: {fileID: 0}
+--- !u!4 &1968473500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968473498}
+  m_LocalRotation: {x: 0.10190574, y: -0, z: -0, w: 0.9947941}
+  m_LocalPosition: {x: 0, y: 4.42, z: 11.56}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1213021528}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 11.698001, y: 0, z: 0}
 --- !u!1001 &4635586653585080417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -515,7 +567,7 @@ PrefabInstance:
     - target: {fileID: 4635586653870261798, guid: 4cbcbb2e123525240becdcc0962a8f59,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4635586653870261798, guid: 4cbcbb2e123525240becdcc0962a8f59,
         type: 3}

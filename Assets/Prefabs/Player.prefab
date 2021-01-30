@@ -314,6 +314,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   allowGoingBackward: 0
+  rotationSpeed: 2
   healthSlider: {fileID: 336104700852983644}
   jumpForce: 2
   allowInput: 1

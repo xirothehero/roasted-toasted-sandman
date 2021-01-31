@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
-  m_Name: NPC1_Start 1
+  m_Name: NPC1_GOOD_1
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: 46c25f1377ae14b488c4a05377cade82,
-    type: 3}
-  text: 'Hello, Sandman. '
-  replies:
-  - {fileID: 11400000, guid: ee43af7a9d2550945a1782c79e8e3da2, type: 2}
+  characterTalkingSprite: {fileID: 0}
+  text: "Oh my mittens! You\u2019ve located Tunah! I cannot properly convey how appreciative
+    I am. Thank you, Sandman. Thank you! Now that I have reunited with Tunah, I will
+    get out of your way. I hope you retrieve enough Time Sand to revive your son.
+    I wish you luck on your journey. Meoooow!~ "
+  replies: []
   options: []
-  finishMonologue: 0
+  finishMonologue: 1
   itemWanted: 
   secondPart: {fileID: 0}
   repeat: 0
-  disableTheNPC: 0
+  disableTheNPC: 1

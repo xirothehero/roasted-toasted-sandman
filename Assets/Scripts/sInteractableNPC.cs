@@ -33,6 +33,8 @@ public class sInteractableNPC : MonoBehaviour
     //private IEnumerator coroutine;
     [HideInInspector] public bool interacting = false;
     private bool skipped = false;
+    private string itemWanted = "";
+    private NPCInteractions gotItDialogue;
 
     private void Start()
     {
@@ -77,7 +79,15 @@ public class sInteractableNPC : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-
+                if (gotItDialogue)
+                {
+                    //Debug.Log("Going to search");
+                    CheckIfGotItem(gotItDialogue);
+                }
+                if (gotItemWanted)
+                {
+                    curModule = gotItDialogue.replies[0];
+                }
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 npcInteractionHolder.holder.gameObject.SetActive(true);
@@ -88,7 +98,7 @@ public class sInteractableNPC : MonoBehaviour
                 interacting = true;
                 //npcInteractionHolder.curNPC = this;
                 Gamemanager.instance.mainCamera.followPlayer = false;
-
+ 
                 InteractionInit();
             }
         }
@@ -134,14 +144,22 @@ public class sInteractableNPC : MonoBehaviour
         }
         animOn = true;
         skipped = false;
-        string holder = "";
-        int idx = 0;
-        while (holder != _text && !skipped)
+        string currentText = "";
+        //string holder = "";
+        string[] splitMessage = _text.Split(' ');
+        string previousWord = splitMessage[0]; // Save previous word with no style            
+        _textObj.text = "<i><color=yellow>" + splitMessage[0] + "</color></i>";
+        int indexWord = 1;
+        //int idx = 0;
+        while (indexWord < splitMessage.Length && !skipped)
         {
             yield return new WaitForSeconds(0.05f);
-            holder += _text[idx];
-            idx++;
-            _textObj.text = holder;
+            currentText += previousWord + " ";
+            _textObj.text = currentText + "<i><color=yellow>" + splitMessage[indexWord] + "</color></i>";
+
+            // Save previous word with no style and add 1
+            previousWord = splitMessage[indexWord];
+            indexWord += 1;
         }
         //yield return new WaitForSeconds(0.05f);
         animOn = false;
@@ -171,20 +189,26 @@ public class sInteractableNPC : MonoBehaviour
                 {
                     //wantsSomething = true;
                     //bool hasIt = false;
-                    for (int i = 0; i < Gamemanager.instance.thePlayer.itemsCollected.Count; i++)
+                    CheckIfGotItem(curModule);
+
+                    gotItDialogue = curModule.replies[0];
+                    Debug.Log(gotItDialogue);
+                    if (gotItemWanted)
                     {
-                        if (Gamemanager.instance.thePlayer.itemsCollected[i] == curModule.itemWanted)
-                        {
-                            gotItemWanted = true;
-                        }
+                        GoToNextModule(gotItDialogue);
+                    }
+                    else if (curModule.replies.Length > 1)
+                    {
+                        //itemWanted = curModule.itemWanted;
+                        GoToNextModule(curModule.replies[1]);
+                    }
+                    else
+                    {
+                        gotItDialogue = curModule;
+                        startingModule = curModule.secondPart;
+                        FinishInteraction();
                     }
 
-                    if (gotItemWanted)
-                        GoToNextModule(curModule.replies[0]);
-                    else if (curModule.replies.Length > 1)
-                        GoToNextModule(curModule.replies[1]);
-                    else
-                        FinishInteraction();
                 }
                 else
                     GoToNextModule(curModule.replies[0]);
@@ -195,6 +219,20 @@ public class sInteractableNPC : MonoBehaviour
         else
         {
             Debug.LogError("You need to add replies or set this module to finishMonologue via enabling the boolean.");
+        }
+    }
+
+    void CheckIfGotItem(NPCInteractions theModule)
+    {
+        Debug.Log(theModule.itemWanted);
+        for (int i = 0; i < Gamemanager.instance.thePlayer.itemsCollected.Count; i++)
+        {
+            //Debug.Log(Gamemanager.instance.thePlayer.itemsCollected[i]);
+            if (Gamemanager.instance.thePlayer.itemsCollected[i] == theModule.itemWanted)
+            {
+                gotItemWanted = true;
+                //Debug.Log("Does have item");
+            }
         }
     }
 

@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
-  m_Name: NPC1_Start 1
+  m_Name: NPC3_GOOD
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: 46c25f1377ae14b488c4a05377cade82,
-    type: 3}
-  text: 'Hello, Sandman. '
-  replies:
-  - {fileID: 11400000, guid: ee43af7a9d2550945a1782c79e8e3da2, type: 2}
+  characterTalkingSprite: {fileID: 0}
+  text: 'MMMM, YES! POOPIE HERE. I LEAVE. '
+  replies: []
   options: []
-  finishMonologue: 0
+  finishMonologue: 1
   itemWanted: 
   secondPart: {fileID: 0}
   repeat: 0

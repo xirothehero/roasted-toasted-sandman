@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
-  m_Name: NPC1_Start 1
+  m_Name: NPC2_Dialogue_5
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: 46c25f1377ae14b488c4a05377cade82,
-    type: 3}
-  text: 'Hello, Sandman. '
+  characterTalkingSprite: {fileID: 0}
+  text: 'Yes. '
   replies:
-  - {fileID: 11400000, guid: ee43af7a9d2550945a1782c79e8e3da2, type: 2}
+  - {fileID: 11400000, guid: 771436a23a7798943a97559b60ca1490, type: 2}
   options: []
   finishMonologue: 0
-  itemWanted: 
-  secondPart: {fileID: 0}
+  itemWanted: spines
+  secondPart: {fileID: 11400000, guid: a54002f69faa66f4ea00a109f3dc0fc0, type: 2}
   repeat: 0
   disableTheNPC: 0

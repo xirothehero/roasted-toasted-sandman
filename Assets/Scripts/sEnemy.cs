@@ -93,10 +93,7 @@ public class sEnemy : MonoBehaviour
         //    enemyAnimator.SetTrigger("Attack");
         SetSpriteRendererSprite(attackSprite);
         swordSwing.Play();
-        if (myWeapon != null)
-        {
-            StartCoroutine(AttackCooldown());
-        }
+        StartCoroutine(AttackCooldown());
 
         Collider[] playerHit = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
 
@@ -104,7 +101,7 @@ public class sEnemy : MonoBehaviour
         {
             if (playerHit[0].GetComponent<sPlayer>())
             {
-                playerHit[0].GetComponent<sPlayer>().TakeDamage(myWeapon.damage);
+                playerHit[0].GetComponent<sPlayer>().TakeDamage(10f);
             }
         }
         //myCollider.enabled = true;

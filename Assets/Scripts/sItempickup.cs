@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class sItempickup : MonoBehaviour
 {
-    private AudioSource pickupNoise;
+    public AudioClip pickupNoise;
     
     [Tooltip("Do not put anything here if you plan to use it for a health pickup.")]
     public string itemName = "";
@@ -25,7 +25,6 @@ public class sItempickup : MonoBehaviour
 
     private void Start()
     {
-        pickupNoise = GetComponent<AudioSource>();
         orgPosY = transform.position.y;
         actualHeight = transform.position.y + height;
     }
@@ -50,7 +49,7 @@ public class sItempickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            pickupNoise.Play();
+            AudioSource.PlayClipAtPoint(pickupNoise, transform.position);
             //other.gameObject.GetComponent<sPlayer>().sand+=sandGain;
             //other.gameObject.GetComponent<sPlayer>().sandText.text = "Sand: " + other.gameObject.GetComponent<sPlayer>().sand;
             if (itemName != "")
@@ -58,14 +57,25 @@ public class sItempickup : MonoBehaviour
             else
             {
                 sPlayer thePlayer = other.gameObject.GetComponent<sPlayer>();
-                if (thePlayer.health + healthPickupAmount <= 100)
+
+                thePlayer.health = thePlayer.health + healthPickupAmount > 100
+                    ? 100
+                    : thePlayer.health + healthPickupAmount;
+
+                if (thePlayer.healthSlider)
+                    thePlayer.healthSlider.value = thePlayer.health;
+                else
+                    Debug.LogError("The player does not have a Slider attached to it on Health Slider");
+                
+                // Check if this is preferred or not
+                /*if (thePlayer.health + healthPickupAmount <= 100)
                 {
                     thePlayer.health += healthPickupAmount;
                     if (thePlayer.healthSlider)
                         thePlayer.healthSlider.value = thePlayer.health;
                     else
                         Debug.LogError("The player does not have a Slider attached to it on Health Slider");
-                }
+                }*/
             }
             Destroy(gameObject);
         }

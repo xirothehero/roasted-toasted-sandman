@@ -290,7 +290,8 @@ MonoBehaviour:
   health: 100
   projectile: {fileID: 5753481003978474027, guid: e0c42b1eca5786c42a57076edc3685e3,
     type: 3}
-  itemPickupPrefab: {fileID: 0}
+  itemPickupPrefab: {fileID: 1813108448908378037, guid: 8a7110ad76de58347b5fb9c5257c48d1,
+    type: 3}
   attackPoint: {fileID: 4635586653090853754}
   weaponRotater: {fileID: 0}
   damageIndicatorTime: 0.5

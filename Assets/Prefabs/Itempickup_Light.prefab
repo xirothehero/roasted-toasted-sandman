@@ -139,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587b157ac26c74c44ab6db0e6113de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSource: {fileID: 0}
+  pickupNoise: {fileID: 8300000, guid: 7f0b4faa363689444ad9a44a7888ca23, type: 3}
   itemName: 
   healthPickupAmount: 0
   spinSpeed: 50

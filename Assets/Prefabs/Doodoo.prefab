@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4377785068255755140
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8393238454818659000, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 843ca784e5eb67940b8ee73bcdc84282,
+        type: 3}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659001, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659002, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: theCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659003, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: itemName
+      value: Dung
+      objectReference: {fileID: 0}
+    - target: {fileID: 8393238454818659005, guid: ce0dc1c207c13fe468bb7323e35c6749,
+        type: 3}
+      propertyPath: m_Name
+      value: Doodoo
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ce0dc1c207c13fe468bb7323e35c6749, type: 3}

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5067017541102793764
+--- !u!114 &-7086514817249363106
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DefaultToonMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: d4acee3c5cd250c439799f2fcf0594a2,
+  m_Name: Hit_Slash
+  m_Shader: {fileID: -6465566751694194690, guid: f9a228809854dd04284a30f38a40fa93,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,8 +33,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_C5568D3B:
-        m_Texture: {fileID: 0}
+    - Texture2D_4AEDDC:
+        m_Texture: {fileID: 2800000, guid: f7ebc9bb2226b874d9727ab23f8c9c8d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -61,8 +61,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_3AA302C0_Texture_1:
-        m_Texture: {fileID: 0}
+    - _SampleTexture2D_1C7F19BF_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b6b540cc18f079d45b4341084923909c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_FBABD0E0_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 175676ccdbaa14f41a9c4388228cad78, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -70,9 +74,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_3128748C: 0.7
-    - Vector1_BECAD2D0: 0.128
-    - Vector1_C2F8E73E: 1.35
+    - Vector1_187A1773: 0.518
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -95,10 +97,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_18D52731: {r: 0.30188674, g: 0.30188674, b: 0.30188674, a: 0}
-    - Color_4512D3DA: {r: 1, g: 1, b: 1, a: 0}
-    - Color_C8F277ED: {r: 0.5283019, g: 0.31763574, b: 0.09967959, a: 0}
-    - Color_D11DEC92: {r: 1, g: 1, b: 1, a: 0}
+    - Color_42B83C9A: {r: 1.735849, g: 1.0863785, b: 0.32751864, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC1_Interaction_9
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: cc91338d70e540b4ea0f8e8ef7937fa8,
+  characterTalkingSprite: {fileID: 21300000, guid: ad2f1ee15347fd24eada15c3e54286df,
     type: 3}
-  text: "\u2026 "
+  text: "Oh, whiskers. Well, I\u2019d love to move but I\u2019m actually looking
+    for something of my own right now and this is the best vantage point to scour
+    the land."
   replies:
-  - {fileID: 11400000, guid: 40c2ef8c8cb2dd7448033b9c38818235, type: 2}
+  - {fileID: 11400000, guid: 2fee7563cb1ff9e42bef24b4a5620e71, type: 2}
   options: []
   finishMonologue: 0
   itemWanted: 

@@ -10,7 +10,7 @@ public class sPlayer : MonoBehaviour
     public float health = 100;
     public float speed = 8;
     public int sand = 0;
-    public Text sandText;
+    //public Text sandText;
     public Transform theCamera;
 
     // Audio things
@@ -172,11 +172,11 @@ public class sPlayer : MonoBehaviour
                 isAttacking = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
-            {
-                Debug.Log("Jumping");
-                Jump();
-            }
+            //if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
+            //{
+            //    Debug.Log("Jumping");
+            //    //Jump();
+            //}
         }
 
         if (playerRenderer)
@@ -198,12 +198,12 @@ public class sPlayer : MonoBehaviour
         weapon = _wep;
     }
 
-    void Jump()
-    {
-        isGrounded = false;
-        rb.AddForce(new Vector3(0, 2, 0) * jumpForce, ForceMode.Impulse);
-        //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
-    }
+    //void Jump()
+    //{
+    //    isGrounded = false;
+    //    rb.AddForce(new Vector3(0, 2, 0) * jumpForce, ForceMode.Impulse);
+    //    //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
+    //}
 
     void Rotate(float _xInput, float _zInput)
     {

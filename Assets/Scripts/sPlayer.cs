@@ -175,7 +175,7 @@ public class sPlayer : MonoBehaviour
 
         if (playerRenderer)
         {
-            playerRenderer.flipX = isLookingRight;
+            playerRenderer.flipX = !isLookingRight;
             playerAnimator.SetBool("IsMoving", isMoving);
             playerAnimator.SetBool("IsFacingBack", isLookingBack);
             playerAnimator.SetBool("IsAttacking", isAttacking);

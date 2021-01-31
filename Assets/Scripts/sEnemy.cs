@@ -13,6 +13,9 @@ public class sEnemy : MonoBehaviour
     public float rotationSpeed = 3f;
 
     public float distanceToAttack = 2.5f;
+    
+    // Sound stuff
+    public AudioSource takeDamage, swordSwing;
 
     // Temp var until actual damage indication is impemented
     public float damageIndicatorTime = 0.5f;
@@ -89,6 +92,7 @@ public class sEnemy : MonoBehaviour
         //if (enemyAnimator)
         //    enemyAnimator.SetTrigger("Attack");
         SetSpriteRendererSprite(attackSprite);
+        swordSwing.Play();
         if (myWeapon != null)
         {
             StartCoroutine(AttackCooldown());
@@ -129,6 +133,7 @@ public class sEnemy : MonoBehaviour
     }
     public void TakeDamage(float _dmg)
     {
+        takeDamage.Play();
         health -= _dmg;
         if (health > 0)
         {

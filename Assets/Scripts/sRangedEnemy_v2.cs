@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class sRangedEnemy_v2 : MonoBehaviour
 {
 
+    public AudioSource takeDamage, throwSpear;
+    
     public float health = 100;
     public GameObject projectile;
     public GameObject itemPickupPrefab;
@@ -89,6 +91,7 @@ public class sRangedEnemy_v2 : MonoBehaviour
 
     public void TakeDamage(float _dmg)
     {
+        takeDamage.Play();
         health -= _dmg;
         if (health > 0)
         {
@@ -136,6 +139,7 @@ public class sRangedEnemy_v2 : MonoBehaviour
     public void Attack()
     {
         // Fire attack here
+        throwSpear.Play();
         GameObject pew = Instantiate(projectile, attackPoint.position, gameObject.transform.rotation);
         pew.GetComponent<Rigidbody>().AddForce(transform.forward * 500f);
         Destroy(pew, 2f);

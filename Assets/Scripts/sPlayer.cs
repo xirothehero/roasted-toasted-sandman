@@ -13,6 +13,9 @@ public class sPlayer : MonoBehaviour
     public Text sandText;
     public Transform theCamera;
 
+    // Audio things
+    public AudioSource walk, takeDamage, swingSword;
+
     //Temp vars like in sEnemy
     public float attackCooldownTime = 0.15f;
     public sWeapon weapon;
@@ -53,6 +56,8 @@ public class sPlayer : MonoBehaviour
     private bool isLookingBack;
     private bool isLookingRight;
     private bool isAttacking;
+
+    private bool walkCooldown;
 
     private void Awake()
     {
@@ -130,7 +135,6 @@ public class sPlayer : MonoBehaviour
                 //    transform.position += (transform.forward + transform.right * xInput) * Time.deltaTime * actualSpeed;
                 //}
 
-
                 if (zInput != 0 && xInput != 0)
                     actualSpeed /= 1.5f;
                 if (keep < 0)
@@ -140,6 +144,12 @@ public class sPlayer : MonoBehaviour
                         xInput = -xInput;
                 }
                 isMoving = (actualSpeed != 0);
+                if (!walkCooldown)
+                {
+                    walk.Play();
+                    StartCoroutine("WalkCooldown");
+                }
+
                 transform.position += (transform.forward * zInput + transform.right * xInput) * Time.deltaTime * actualSpeed;
 
                 if (xInput < 0) isLookingRight = false;
@@ -151,6 +161,7 @@ public class sPlayer : MonoBehaviour
             if (!atkCooldown && Input.GetMouseButton(0))
             {
                 //Rotate(xInput, zInput);
+                swingSword.Play();
                 Attack();
                 isAttacking = true;
             }
@@ -286,8 +297,16 @@ public class sPlayer : MonoBehaviour
         }
     }
 
+    private IEnumerator WalkCooldown()
+    {
+        walkCooldown = true;
+        yield return new WaitForSeconds(walk.clip.length);
+        walkCooldown = false;
+    }
+
     public void TakeDamage(float _dmg)
     {
+        takeDamage.Play();
         health -= _dmg;
         if (health > 0)
         {

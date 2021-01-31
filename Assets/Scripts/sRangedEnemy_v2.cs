@@ -87,8 +87,10 @@ public class sRangedEnemy_v2 : MonoBehaviour
                 //    }
                 //}
                 if (!atkCooldown)
+                {
+                    Attack();
                     enemyAnimator.SetBool("IsAttacking", true);
-                Attack();
+                }
             }
         }
     }

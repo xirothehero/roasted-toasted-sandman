@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class sRangedEnemy_v2 : MonoBehaviour
 {
 
+    public AudioSource takeDamage, throwSpear;
+    
     public float health = 100;
     public GameObject projectile;
     public GameObject itemPickupPrefab;
@@ -24,6 +26,7 @@ public class sRangedEnemy_v2 : MonoBehaviour
     public Sprite idleSprite;
     public SpriteRenderer damageIndicator;
     public SpriteRenderer mySpriteRender;
+    public Animator enemyAnimator;
 
     //Vector3 relativeSamePos = new Vector3(0,0,0);
     //float accuracy;
@@ -44,11 +47,13 @@ public class sRangedEnemy_v2 : MonoBehaviour
             myAgent.destination = thePlayer.position;
             if (myAgent.remainingDistance > startAttackingAtRange)
             {
+                enemyAnimator.SetBool("IsMoving", true);
                 myAgent.isStopped = false;
                 Debug.Log("Continuing to folow the player");
             }
             else
             {
+                enemyAnimator.SetBool("IsMoving", false);
                 myAgent.isStopped = true;
                 Vector3 relativePos = thePlayer.position - transform.position;
                 Quaternion lookRotation = Quaternion.LookRotation(relativePos, Vector3.up);
@@ -82,13 +87,15 @@ public class sRangedEnemy_v2 : MonoBehaviour
                 //    }
                 //}
                 if (!atkCooldown)
-                    Attack();
+                    enemyAnimator.SetBool("IsAttacking", true);
+                Attack();
             }
         }
     }
 
     public void TakeDamage(float _dmg)
     {
+        takeDamage.Play();
         health -= _dmg;
         if (health > 0)
         {
@@ -136,6 +143,7 @@ public class sRangedEnemy_v2 : MonoBehaviour
     public void Attack()
     {
         // Fire attack here
+        throwSpear.Play();
         GameObject pew = Instantiate(projectile, attackPoint.position, gameObject.transform.rotation);
         pew.GetComponent<Rigidbody>().AddForce(transform.forward * 500f);
         Destroy(pew, 2f);
@@ -146,7 +154,7 @@ public class sRangedEnemy_v2 : MonoBehaviour
             StartCoroutine("AttackCooldown");
         }
         //myCollider.enabled = true;
-
+        enemyAnimator.SetBool("IsAttacking", false);
     }
 
 

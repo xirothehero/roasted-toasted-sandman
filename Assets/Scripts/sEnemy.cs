@@ -13,6 +13,9 @@ public class sEnemy : MonoBehaviour
     public float rotationSpeed = 3f;
 
     public float distanceToAttack = 2.5f;
+    
+    // Sound stuff
+    public AudioSource takeDamage, swordSwing;
 
     // Temp var until actual damage indication is impemented
     public float damageIndicatorTime = 0.5f;
@@ -30,13 +33,13 @@ public class sEnemy : MonoBehaviour
     public Sprite idleSprite;
     public SpriteRenderer damageIndicator;
     public SpriteRenderer mySpriteRender;
+    public Animator enemyAnimator;
 
     //private BoxCollider myCollider;
    
     Transform thePlayer;
     bool atkCooldown = false;
     Quaternion orgWeaponRot;
-    Animator enemyAnimator;
     NavMeshAgent myAgent;
     Rigidbody rb;
 
@@ -46,7 +49,6 @@ public class sEnemy : MonoBehaviour
         //thePlayer = Gamemanager.instance.thePlayer.transform;
         myAgent = gameObject.GetComponent<NavMeshAgent>();
         rb = gameObject.GetComponent<Rigidbody>();
-        enemyAnimator = gameObject.GetComponent<Animator>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
     }
 
@@ -67,7 +69,8 @@ public class sEnemy : MonoBehaviour
             else
             {
                 //mySpriteRender.sprite = idleSprite;
-                SetSpriteRendererSprite(walkingSprite);
+                //SetSpriteRendererSprite(walkingSprite);
+                enemyAnimator.SetBool("IsMoving", true);
                 myAgent.isStopped = false;
             }
         }
@@ -88,11 +91,10 @@ public class sEnemy : MonoBehaviour
         //myWeapon.swordAnimator.SetTrigger("SwingSword");
         //if (enemyAnimator)
         //    enemyAnimator.SetTrigger("Attack");
-        SetSpriteRendererSprite(attackSprite);
-        if (myWeapon != null)
-        {
-            StartCoroutine(AttackCooldown());
-        }
+        //SetSpriteRendererSprite(attackSprite);
+        enemyAnimator.SetBool("IsAttacking", true);
+        swordSwing.Play();
+        StartCoroutine(AttackCooldown());
 
         Collider[] playerHit = Physics.OverlapSphere(attackPoint.position, attackRange, playerLayer);
 
@@ -100,7 +102,7 @@ public class sEnemy : MonoBehaviour
         {
             if (playerHit[0].GetComponent<sPlayer>())
             {
-                playerHit[0].GetComponent<sPlayer>().TakeDamage(myWeapon.damage);
+                playerHit[0].GetComponent<sPlayer>().TakeDamage(10f);
             }
         }
         //myCollider.enabled = true;
@@ -115,7 +117,9 @@ public class sEnemy : MonoBehaviour
             yield return new WaitForSeconds(attackCooldownTime);
             atkCooldown = false;
         }
-        SetSpriteRendererSprite(idleSprite);
+        // SetSpriteRendererSprite(idleSprite);
+        enemyAnimator.SetBool("IsMoving", false);
+        enemyAnimator.SetBool("IsAttacking", false);
     }
 
     private void OnDrawGizmosSelected()
@@ -129,6 +133,7 @@ public class sEnemy : MonoBehaviour
     }
     public void TakeDamage(float _dmg)
     {
+        takeDamage.Play();
         health -= _dmg;
         if (health > 0)
         {

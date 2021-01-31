@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC1_Interaction_10
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: 46c25f1377ae14b488c4a05377cade82,
+  characterTalkingSprite: {fileID: 21300000, guid: ad2f1ee15347fd24eada15c3e54286df,
     type: 3}
   text: "I\u2019m searching for something very near and dear to my heart, you see.
     Not quite as paramount as a son would be, I suppose. But nonetheless, I cherish
     it as such. I have lost <i><b><color=green>Tunah</color></b></i>, my most prized
-    plaything. If you happen to find it, I would happily move out of your way."
-  replies: []
+    plaything. If you happen to find it, I would happily move out of your way. "
+  replies:
+  - {fileID: 11400000, guid: 8ef48850f0729044799fb23de2673a90, type: 2}
   options: []
-  finishMonologue: 1
-  itemWanted: 
-  secondPart: {fileID: 0}
+  finishMonologue: 0
+  itemWanted: Toy Fish
+  secondPart: {fileID: 11400000, guid: 83438e55479c285428e546c2617c9978, type: 2}
   repeat: 0
   disableTheNPC: 0

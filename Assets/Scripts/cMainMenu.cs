@@ -8,16 +8,20 @@ public class cMainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public Button start, exit;
+
+    private AudioSource click;
     void Awake()
     {
         start.onClick.AddListener(Begin);
         exit.onClick.AddListener(Exit);
+        click = GetComponent<AudioSource>();
     }
 
     private void Begin()
     {
         // Can be changed to change into cutscenes and stuff
-        SceneManager.LoadScene("Level");
+        click.Play();
+        SceneManager.LoadScene("IntroScene");
     }
 
     private void Exit()

@@ -10,7 +10,7 @@ public class sPlayer : MonoBehaviour
     public float health = 100;
     public float speed = 8;
     public int sand = 0;
-    public Text sandText;
+    //public Text sandText;
     public Transform theCamera;
 
     // Audio things
@@ -19,6 +19,8 @@ public class sPlayer : MonoBehaviour
     //Temp vars like in sEnemy
     public float attackCooldownTime = 0.15f;
     public sWeapon weapon;
+
+    public HitFX hitFX;
     //Quaternion orgWeaponRot;
 
     //public List<sItempickup> itemsCollected = new List<sItempickup>();
@@ -45,8 +47,8 @@ public class sPlayer : MonoBehaviour
     [HideInInspector] public bool allowInput = true; 
 
     bool atkCooldown = false;
-    Animator playerAnimator;
-    SpriteRenderer playerRenderer;
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private SpriteRenderer playerRenderer;
     Rigidbody rb;
     //float heading = 0;
     float keep = 1;
@@ -61,8 +63,8 @@ public class sPlayer : MonoBehaviour
 
     private void Awake()
     {
-        playerAnimator = gameObject.GetComponent<Animator>();
-        playerRenderer = gameObject.GetComponent<SpriteRenderer>();
+//         playerAnimator = gameObject.GetComponent<Animator>();
+//         playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -91,7 +93,8 @@ public class sPlayer : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
         if (allowGoingBackward)
         {
-            Rotate(xInput, zInput);
+            //if (isLookingBack)
+                Rotate(xInput, zInput);
             if (zInput < 0) isLookingBack = true;
             else if (zInput > 0) isLookingBack = false;
             // else if zInput is 0, we just keep isLookingBack as is
@@ -119,8 +122,11 @@ public class sPlayer : MonoBehaviour
                 // Uncomment this as well to rotate behind.
                 if (allowGoingBackward)
                 {
-                    Rotate(xInput, zInput);
-                    keep = zInput;
+                    //if (isLookingBack)
+                    //{
+                        Rotate(xInput, zInput);
+                        keep = zInput;
+                    //}
                     //transform.position += transform.forward * Time.deltaTime * speed;
 
 
@@ -166,16 +172,19 @@ public class sPlayer : MonoBehaviour
                 isAttacking = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
-            {
-                Debug.Log("Jumping");
-                Jump();
-            }
+            //if (Input.GetKeyDown(KeyCode.Space) && isGrounded && rb.velocity.y <= 0)
+            //{
+            //    Debug.Log("Jumping");
+            //    //Jump();
+            //}
         }
 
         if (playerRenderer)
         {
-            playerRenderer.flipX = isLookingRight;
+            if (isLookingBack)
+                playerRenderer.flipX = isLookingRight;
+            else
+                playerRenderer.flipX = !isLookingRight;
             playerAnimator.SetBool("IsMoving", isMoving);
             playerAnimator.SetBool("IsFacingBack", isLookingBack);
             playerAnimator.SetBool("IsAttacking", isAttacking);
@@ -189,12 +198,12 @@ public class sPlayer : MonoBehaviour
         weapon = _wep;
     }
 
-    void Jump()
-    {
-        isGrounded = false;
-        rb.AddForce(new Vector3(0, 2, 0) * jumpForce, ForceMode.Impulse);
-        //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
-    }
+    //void Jump()
+    //{
+    //    isGrounded = false;
+    //    rb.AddForce(new Vector3(0, 2, 0) * jumpForce, ForceMode.Impulse);
+    //    //rb.velocity += (Vector3.up * 3) * Physics.gravity.y * jumpForce * Time.deltaTime;
+    //}
 
     void Rotate(float _xInput, float _zInput)
     {
@@ -227,7 +236,8 @@ public class sPlayer : MonoBehaviour
         //    }
         //}
 
-        if (keep >= 0)
+        // if (keep >= 0)
+        if (!isLookingBack)
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
             //Debug.Log(theCamera.eulerAngles.y);
@@ -239,28 +249,32 @@ public class sPlayer : MonoBehaviour
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = rotation;
+            // transform.LookAt(theCamera.GetChild(0));
         }
     }
 
     void Attack()
     {
         keep = 1;
-        if (weapon.swordAnimator)
-            weapon.swordAnimator.SetTrigger("SwingSword");
-        //playerAnimator.SetTrigger("Attack");
-        else
-        {
-            Debug.LogWarning("There is currently no animator attached to the playerAnimator, thus no annimation played.");
-            if (weapon)
-            {
-                //weapon.RotateSword(true);
-            }
-            else
-            {
-                Debug.LogError("No weapon transform was attached to the player's weapon variable");
-            }
-        }
+//         if (weapon.swordAnimator)
+//             weapon.swordAnimator.SetTrigger("SwingSword");
+//         //playerAnimator.SetTrigger("Attack");
+//         else
+//         {
+//             Debug.LogWarning("There is currently no animator attached to the playerAnimator, thus no annimation played.");
+//             if (weapon)
+//             {
+//                 //weapon.RotateSword(true);
+//             }
+//             else
+//             {
+//                 Debug.LogError("No weapon transform was attached to the player's weapon variable");
+//             }
+//         }
         //myCollider.enabled = true;
+
+        hitFX.PlayHitFX();
+
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
         foreach (Collider enemy in enemiesHit)

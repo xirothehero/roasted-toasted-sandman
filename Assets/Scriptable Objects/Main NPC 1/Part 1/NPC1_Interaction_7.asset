@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC1_Interaction_7
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: a4af6ec92bcdec441b5688f6fc464cb4,
+  characterTalkingSprite: {fileID: 21300000, guid: cc91338d70e540b4ea0f8e8ef7937fa8,
     type: 3}
-  text: Yes.
+  text: 'Yes. '
   replies:
   - {fileID: 11400000, guid: fcc0793b6723de14bac8250fcc3cda90, type: 2}
   options: []

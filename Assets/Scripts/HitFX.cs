@@ -5,7 +5,7 @@ using UnityEngine;
 public class HitFX : MonoBehaviour
 {
     public GameObject ps;
-    void PlayHitFX() {
+    public void PlayHitFX() {
         ps.SetActive(false);
         ps.SetActive(true);
         

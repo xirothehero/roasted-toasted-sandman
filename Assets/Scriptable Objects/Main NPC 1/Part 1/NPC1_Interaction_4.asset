@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC1_Interaction_4
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: 46c25f1377ae14b488c4a05377cade82,
+  characterTalkingSprite: {fileID: 21300000, guid: ad2f1ee15347fd24eada15c3e54286df,
     type: 3}
   text: "Well, I\u2019m not sure if you\u2019ve heard, but you can bring your son
     back to life! All you must do is collect enough Time Sand to fill his hourglass.
-    I\u2019m sure you can revive him!"
+    I\u2019m sure you can revive him! "
   replies:
   - {fileID: 11400000, guid: d698a1ad8de0e334d999658081a98dd3, type: 2}
   options: []

@@ -3,7 +3,12 @@ guid: 9a4395728f4290c47b967bb67db3cf52
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HourglassMat
+    second: {fileID: 2100000, guid: 94106ba36d1096742a9581ad8280ce88, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

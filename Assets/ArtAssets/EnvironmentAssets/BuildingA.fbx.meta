@@ -3,7 +3,12 @@ guid: 7b99178185bc0b74c814db7aafaa1770
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: base terracotta
+    second: {fileID: 2100000, guid: fc84c03f40c85d44cbbfb28931d30d24, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

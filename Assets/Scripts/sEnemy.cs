@@ -70,7 +70,8 @@ public class sEnemy : MonoBehaviour
             else
             {
                 //mySpriteRender.sprite = idleSprite;
-                SetSpriteRendererSprite(walkingSprite);
+                //SetSpriteRendererSprite(walkingSprite);
+                enemyAnimator.SetBool("IsMoving", true);
                 myAgent.isStopped = false;
             }
         }
@@ -91,7 +92,8 @@ public class sEnemy : MonoBehaviour
         //myWeapon.swordAnimator.SetTrigger("SwingSword");
         //if (enemyAnimator)
         //    enemyAnimator.SetTrigger("Attack");
-        SetSpriteRendererSprite(attackSprite);
+        //SetSpriteRendererSprite(attackSprite);
+        enemyAnimator.SetBool("IsAttacking", true);
         swordSwing.Play();
         StartCoroutine(AttackCooldown());
 
@@ -116,7 +118,9 @@ public class sEnemy : MonoBehaviour
             yield return new WaitForSeconds(attackCooldownTime);
             atkCooldown = false;
         }
-        SetSpriteRendererSprite(idleSprite);
+        // SetSpriteRendererSprite(idleSprite);
+        enemyAnimator.SetBool("IsMoving", false);
+        enemyAnimator.SetBool("IsAttacking", false);
     }
 
     private void OnDrawGizmosSelected()

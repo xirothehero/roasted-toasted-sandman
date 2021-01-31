@@ -91,7 +91,8 @@ public class sPlayer : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
         if (allowGoingBackward)
         {
-            Rotate(xInput, zInput);
+            if (isLookingBack)
+                Rotate(xInput, zInput);
             if (zInput < 0) isLookingBack = true;
             else if (zInput > 0) isLookingBack = false;
             // else if zInput is 0, we just keep isLookingBack as is
@@ -119,8 +120,11 @@ public class sPlayer : MonoBehaviour
                 // Uncomment this as well to rotate behind.
                 if (allowGoingBackward)
                 {
-                    Rotate(xInput, zInput);
-                    keep = zInput;
+                    if (isLookingBack)
+                    {
+                        Rotate(xInput, zInput);
+                        keep = zInput;
+                    }
                     //transform.position += transform.forward * Time.deltaTime * speed;
 
 
@@ -137,7 +141,7 @@ public class sPlayer : MonoBehaviour
 
                 if (zInput != 0 && xInput != 0)
                     actualSpeed /= 1.5f;
-                if (keep < 0)
+                if (isLookingBack)
                 {
                     zInput = 1;
                     if (zInput != 0)
@@ -227,7 +231,8 @@ public class sPlayer : MonoBehaviour
         //    }
         //}
 
-        if (keep >= 0)
+        //if (keep >= 0)
+        if (!isLookingBack)
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
             //Debug.Log(theCamera.eulerAngles.y);
@@ -235,31 +240,32 @@ public class sPlayer : MonoBehaviour
         else
         {
             //Debug.Log("Rotating towards camera.");
-            Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = rotation;
+            //             Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
+            //             lookPos.y = 0;
+            //             Quaternion rotation = Quaternion.LookRotation(lookPos);
+            //             transform.rotation = rotation;
+            transform.LookAt(theCamera.GetChild(0));
         }
     }
 
     void Attack()
     {
         keep = 1;
-        if (weapon.swordAnimator)
-            weapon.swordAnimator.SetTrigger("SwingSword");
-        //playerAnimator.SetTrigger("Attack");
-        else
-        {
-            Debug.LogWarning("There is currently no animator attached to the playerAnimator, thus no annimation played.");
-            if (weapon)
-            {
-                //weapon.RotateSword(true);
-            }
-            else
-            {
-                Debug.LogError("No weapon transform was attached to the player's weapon variable");
-            }
-        }
+//         if (weapon.swordAnimator)
+//             weapon.swordAnimator.SetTrigger("SwingSword");
+//         //playerAnimator.SetTrigger("Attack");
+//         else
+//         {
+//             Debug.LogWarning("There is currently no animator attached to the playerAnimator, thus no annimation played.");
+//             if (weapon)
+//             {
+//                 //weapon.RotateSword(true);
+//             }
+//             else
+//             {
+//                 Debug.LogError("No weapon transform was attached to the player's weapon variable");
+//             }
+//         }
         //myCollider.enabled = true;
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 

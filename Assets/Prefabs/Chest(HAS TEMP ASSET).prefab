@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2822199486622929074}
   m_Layer: 0
-  m_Name: Chest
+  m_Name: Chest(HAS TEMP ASSET)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2049282259129810263}
   - component: {fileID: 3811363042765019862}
-  - component: {fileID: 2593388625965446413}
+  - component: {fileID: 8532201820879493132}
   m_Layer: 5
   m_Name: New Sprite
   m_TagString: Untagged
@@ -144,7 +144,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2593388625965446413
+--- !u!114 &8532201820879493132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5210143590701909931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bb64935366426748812b7e17d5c5db6, type: 3}
+  m_Script: {fileID: 11500000, guid: c7272c5a7ab20f34093dbbc011a40f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  theCamera: {fileID: 0}

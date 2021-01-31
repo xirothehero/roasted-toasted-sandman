@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC2_Dialogue_1
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 0}
+  characterTalkingSprite: {fileID: 21300000, guid: cc91338d70e540b4ea0f8e8ef7937fa8,
+    type: 3}
   text: 'That will not be necessary. '
   replies:
   - {fileID: 11400000, guid: bb0a8a01a6e24fd4ba9d401db9995700, type: 2}

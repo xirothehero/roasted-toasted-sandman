@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC3_BAD 1
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 0}
+  characterTalkingSprite: {fileID: 21300000, guid: 4b66db622f16f9b44b5117f787f8e29f,
+    type: 3}
   text: 'HUH? NO <i><b><color=green>POOPIE</color></b></i>? WAAAAAAAH! '
   replies: []
   options: []

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC3_DIALOGUE_1
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 0}
+  characterTalkingSprite: {fileID: 21300000, guid: cc91338d70e540b4ea0f8e8ef7937fa8,
+    type: 3}
   text: 'What? '
   replies:
   - {fileID: 11400000, guid: 1fc5d12dac91ead498d933172ae5b4bb, type: 2}

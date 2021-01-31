@@ -21,7 +21,7 @@ public class cMainMenu : MonoBehaviour
     {
         // Can be changed to change into cutscenes and stuff
         click.Play();
-        SceneManager.LoadScene("Level");
+        SceneManager.LoadScene("IntroScene");
     }
 
     private void Exit()

@@ -6,6 +6,7 @@ using UnityEngine;
 public class NPCInteractions : ScriptableObject
 {
     [Header("Make sure to read tool tips")]
+    public Sprite characterTalkingSprite;
     [Tooltip("The dialogue text that the NPC says.")]
     public string text;
     [Tooltip("For a normal conversation, put up to four. If they want an item, put two (make sure to put the has the item dialogue in the first one). If it's just a monologue, or no replies, do just one.")]

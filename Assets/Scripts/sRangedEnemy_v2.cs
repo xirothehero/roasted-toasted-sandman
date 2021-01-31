@@ -18,6 +18,13 @@ public class sRangedEnemy_v2 : MonoBehaviour
     public float rotationSpeed = 1.5f;
     public float attackCooldownTime = 0.15f;
 
+    [Header("Sprites")]
+    public Sprite attackSprite;
+    public Sprite walkingSprite;
+    public Sprite idleSprite;
+    public SpriteRenderer damageIndicator;
+    public SpriteRenderer mySpriteRender;
+
     //Vector3 relativeSamePos = new Vector3(0,0,0);
     //float accuracy;
     Transform thePlayer;

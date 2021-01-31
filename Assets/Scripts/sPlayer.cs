@@ -131,7 +131,7 @@ public class sPlayer : MonoBehaviour
                 //}
 
 
-                if (zInput == 1 || zInput == -1)
+                if (zInput != 0 && xInput != 0)
                     actualSpeed /= 1.5f;
                 if (keep < 0)
                 {

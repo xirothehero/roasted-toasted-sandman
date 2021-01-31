@@ -24,6 +24,13 @@ public class sEnemy : MonoBehaviour
     public float attackRange = 2f;
     public LayerMask playerLayer;
 
+    [Header("Sprites")]
+    public Sprite attackSprite;
+    public Sprite walkingSprite;
+    public Sprite idleSprite;
+    public SpriteRenderer damageIndicator;
+    public SpriteRenderer mySpriteRender;
+
     //private BoxCollider myCollider;
    
     Transform thePlayer;
@@ -35,6 +42,7 @@ public class sEnemy : MonoBehaviour
 
     void Start()
     {
+        //mySpriteRender = gameObject.GetComponent<SpriteRenderer>();
         //thePlayer = Gamemanager.instance.thePlayer.transform;
         myAgent = gameObject.GetComponent<NavMeshAgent>();
         rb = gameObject.GetComponent<Rigidbody>();
@@ -58,6 +66,8 @@ public class sEnemy : MonoBehaviour
             }
             else
             {
+                //mySpriteRender.sprite = idleSprite;
+                SetSpriteRendererSprite(walkingSprite);
                 myAgent.isStopped = false;
             }
         }
@@ -74,10 +84,11 @@ public class sEnemy : MonoBehaviour
     {
         // If it exists
 
-        if (myWeapon.swordAnimator)
-            myWeapon.swordAnimator.SetTrigger("SwingSword");
+        //if (myWeapon.swordAnimator)
+        //myWeapon.swordAnimator.SetTrigger("SwingSword");
         //if (enemyAnimator)
         //    enemyAnimator.SetTrigger("Attack");
+        SetSpriteRendererSprite(attackSprite);
         if (myWeapon != null)
         {
             StartCoroutine(AttackCooldown());
@@ -104,6 +115,7 @@ public class sEnemy : MonoBehaviour
             yield return new WaitForSeconds(attackCooldownTime);
             atkCooldown = false;
         }
+        SetSpriteRendererSprite(idleSprite);
     }
 
     private void OnDrawGizmosSelected()
@@ -143,18 +155,44 @@ public class sEnemy : MonoBehaviour
     {
         //rb.AddForce(new Vector3(-transform.forward.x,transform.position.y*3,-transform.forward.z) * knockBackforce, ForceMode.Impulse);
     }
+
+    void SetSpriteRendererSprite(Sprite _theSprite)
+    {
+        mySpriteRender.sprite = _theSprite;
+        damageIndicator.sprite = _theSprite;   
+    }
     
     // Temporary to show damage
     IEnumerator IndicateDamage()
     {
-        Color orgColor = gameObject.GetComponent<Renderer>().material.color;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        //Color orgColor = damageIndicator.color;
+        //mySpriteRender.color = new Color(0, 0, 1);
+        //damageIndicator.color = Color.red;
+        //gameObject.GetComponent<Renderer>().material.color = Color.red;
+        float timer = damageIndicatorTime;
+        float smallTimer = 0.1f;
         bool wait = true;
         while (wait)
         {
-            yield return new WaitForSeconds(damageIndicatorTime);
-            wait = false;
+            timer -= Time.deltaTime;
+            if (timer > 0)
+            {
+                smallTimer -= Time.deltaTime;
+                if (smallTimer <= 0)
+                {
+                    smallTimer = 0.1f;
+                    // Toggle damage indicator on and off
+                    damageIndicator.enabled = !damageIndicator.enabled;
+                }
+            }
+            else
+            {
+                wait = false;
+            }
+            //yield return new WaitForSeconds(damageIndicatorTime);
+            yield return new WaitForEndOfFrame();
+            //wait = false;
         }
-        gameObject.GetComponent<Renderer>().material.color = orgColor;
+        //gameObject.GetComponent<Renderer>().material.color = orgColor;
     }
 }

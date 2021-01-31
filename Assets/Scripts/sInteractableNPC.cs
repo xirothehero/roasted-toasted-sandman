@@ -19,10 +19,11 @@ public class sInteractableNPC : MonoBehaviour
     public bool repeat = true;
     public Text spaceToAdvanceText;
     public bool disableInteraction = false;
-    public GameObject objectBlockingPath;
+    //public GameObject objectBlockingPath;
 
     [Tooltip("Make sure to put this on an NPC that is meant to block the path.")]
     public Transform blockingNPCDestination;
+    public Image characterFrame;
 
     [HideInInspector] public NPCInteractions curModule;
     private bool isEnabled = false;
@@ -35,7 +36,6 @@ public class sInteractableNPC : MonoBehaviour
 
     private void Start()
     {
-
         npcAgent = gameObject.GetComponent<NavMeshAgent>();
         curModule = startingModule;
     }
@@ -125,6 +125,13 @@ public class sInteractableNPC : MonoBehaviour
     IEnumerator TextAnim(Text _textObj, string _text)
     {
         Debug.Log(_text);
+
+        if (characterFrame)
+            characterFrame.sprite = curModule.characterTalkingSprite;
+        else
+        {
+            Debug.LogWarning("There currently isn't a characterFrame for: " + curModule.name);
+        }
         animOn = true;
         skipped = false;
         string holder = "";
@@ -205,7 +212,9 @@ public class sInteractableNPC : MonoBehaviour
 
         if (gotItemWanted)
         {
-            Destroy(objectBlockingPath);
+            if (blockingNPCDestination)
+                npcAgent.destination = blockingNPCDestination.position;
+            //Destroy(objectBlockingPath);
         }
 
         if (curModule.disableTheNPC)

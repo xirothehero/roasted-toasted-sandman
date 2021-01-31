@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f85219a981eb744a90f6df88043477, type: 3}
   m_Name: NPC1_Interaction_5
   m_EditorClassIdentifier: 
-  characterTalkingSprite: {fileID: 21300000, guid: cc91338d70e540b4ea0f8e8ef7937fa8,
+  characterTalkingSprite: {fileID: 21300000, guid: ad2f1ee15347fd24eada15c3e54286df,
     type: 3}
-  text: '... '
+  text: " All you must do is collect enough Time Sand to fill his hourglass. I\u2019m
+    sure you can revive him! "
   replies:
-  - {fileID: 11400000, guid: 837629ea6ab069642b0d079616bb9147, type: 2}
+  - {fileID: 11400000, guid: 4feda92d78df2714b93780c978a99943, type: 2}
   options: []
   finishMonologue: 0
   itemWanted: 

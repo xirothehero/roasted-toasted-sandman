@@ -7,6 +7,7 @@ public class cGameover : MonoBehaviour
 {
     public void GotoScene(int _idx)
     {
-        SceneManager.LoadScene(_idx);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
     }
 }

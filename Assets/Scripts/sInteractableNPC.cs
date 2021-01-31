@@ -36,8 +36,11 @@ public class sInteractableNPC : MonoBehaviour
     private string itemWanted = "";
     private NPCInteractions gotItDialogue;
 
+    private AudioSource jibberish;
+
     private void Start()
     {
+        jibberish = GetComponent<AudioSource>();
         npcAgent = gameObject.GetComponent<NavMeshAgent>();
         curModule = startingModule;
     }
@@ -135,7 +138,7 @@ public class sInteractableNPC : MonoBehaviour
     IEnumerator TextAnim(Text _textObj, string _text)
     {
         Debug.Log(_text);
-
+        jibberish.Play();
         if (characterFrame)
             characterFrame.sprite = curModule.characterTalkingSprite;
         else

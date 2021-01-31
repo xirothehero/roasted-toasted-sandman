@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class sItempickup : MonoBehaviour
 {
+    private AudioSource pickupNoise;
+    
     [Tooltip("Do not put anything here if you plan to use it for a health pickup.")]
     public string itemName = "";
     public int healthPickupAmount = 0;
@@ -23,6 +25,7 @@ public class sItempickup : MonoBehaviour
 
     private void Start()
     {
+        pickupNoise = GetComponent<AudioSource>();
         orgPosY = transform.position.y;
         actualHeight = transform.position.y + height;
     }
@@ -47,6 +50,7 @@ public class sItempickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            pickupNoise.Play();
             //other.gameObject.GetComponent<sPlayer>().sand+=sandGain;
             //other.gameObject.GetComponent<sPlayer>().sandText.text = "Sand: " + other.gameObject.GetComponent<sPlayer>().sand;
             if (itemName != "")

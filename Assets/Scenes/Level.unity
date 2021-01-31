@@ -51313,7 +51313,7 @@ MonoBehaviour:
   followPlayer: 1
   cinematicSpeed: 20
   cinematicTurnSpeed: 9
-  turnAngleMinMax: 5
+  turnAngleMinMax: 30
   destination: {fileID: 0}
   lookAtTarget: {fileID: 0}
 --- !u!4 &1207387425
@@ -70854,6 +70854,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8793009587089781600, guid: 80df27187de58ac458d78615f7166038,
+        type: 3}
+      propertyPath: theCamera
+      value: 
+      objectReference: {fileID: 1385486063}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80df27187de58ac458d78615f7166038, type: 3}
 --- !u!114 &2008375783 stripped

@@ -14,6 +14,9 @@ public class sBillboardSprite : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = theCamera.transform.rotation;
+        if (theCamera)
+            transform.rotation = theCamera.transform.rotation;
+        else
+            transform.rotation = Gamemanager.instance.mainCamera.transform.rotation;
     }
 }

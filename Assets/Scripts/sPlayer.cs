@@ -63,6 +63,7 @@ public class sPlayer : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Awaking");
 //         playerAnimator = gameObject.GetComponent<Animator>();
 //         playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();

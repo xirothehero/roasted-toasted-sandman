@@ -19,6 +19,8 @@ public class sPlayer : MonoBehaviour
     //Temp vars like in sEnemy
     public float attackCooldownTime = 0.15f;
     public sWeapon weapon;
+
+    public HitFX hitFX;
     //Quaternion orgWeaponRot;
 
     //public List<sItempickup> itemsCollected = new List<sItempickup>();
@@ -45,8 +47,8 @@ public class sPlayer : MonoBehaviour
     [HideInInspector] public bool allowInput = true; 
 
     bool atkCooldown = false;
-    Animator playerAnimator;
-    SpriteRenderer playerRenderer;
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private SpriteRenderer playerRenderer;
     Rigidbody rb;
     //float heading = 0;
     float keep = 1;
@@ -61,8 +63,8 @@ public class sPlayer : MonoBehaviour
 
     private void Awake()
     {
-        playerAnimator = gameObject.GetComponent<Animator>();
-        playerRenderer = gameObject.GetComponent<SpriteRenderer>();
+//         playerAnimator = gameObject.GetComponent<Animator>();
+//         playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -91,7 +93,7 @@ public class sPlayer : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal");
         if (allowGoingBackward)
         {
-            if (isLookingBack)
+            //if (isLookingBack)
                 Rotate(xInput, zInput);
             if (zInput < 0) isLookingBack = true;
             else if (zInput > 0) isLookingBack = false;
@@ -120,11 +122,11 @@ public class sPlayer : MonoBehaviour
                 // Uncomment this as well to rotate behind.
                 if (allowGoingBackward)
                 {
-                    if (isLookingBack)
-                    {
+                    //if (isLookingBack)
+                    //{
                         Rotate(xInput, zInput);
                         keep = zInput;
-                    }
+                    //}
                     //transform.position += transform.forward * Time.deltaTime * speed;
 
 
@@ -141,7 +143,7 @@ public class sPlayer : MonoBehaviour
 
                 if (zInput != 0 && xInput != 0)
                     actualSpeed /= 1.5f;
-                if (isLookingBack)
+                if (keep < 0)
                 {
                     zInput = 1;
                     if (zInput != 0)
@@ -179,7 +181,10 @@ public class sPlayer : MonoBehaviour
 
         if (playerRenderer)
         {
-            playerRenderer.flipX = !isLookingRight;
+            if (isLookingBack)
+                playerRenderer.flipX = isLookingRight;
+            else
+                playerRenderer.flipX = !isLookingRight;
             playerAnimator.SetBool("IsMoving", isMoving);
             playerAnimator.SetBool("IsFacingBack", isLookingBack);
             playerAnimator.SetBool("IsAttacking", isAttacking);
@@ -231,7 +236,7 @@ public class sPlayer : MonoBehaviour
         //    }
         //}
 
-        //if (keep >= 0)
+        // if (keep >= 0)
         if (!isLookingBack)
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
@@ -240,11 +245,11 @@ public class sPlayer : MonoBehaviour
         else
         {
             //Debug.Log("Rotating towards camera.");
-            //             Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
-            //             lookPos.y = 0;
-            //             Quaternion rotation = Quaternion.LookRotation(lookPos);
-            //             transform.rotation = rotation;
-            transform.LookAt(theCamera.GetChild(0));
+            Vector3 lookPos = theCamera.GetChild(0).position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = rotation;
+            // transform.LookAt(theCamera.GetChild(0));
         }
     }
 
@@ -267,6 +272,9 @@ public class sPlayer : MonoBehaviour
 //             }
 //         }
         //myCollider.enabled = true;
+
+        hitFX.PlayHitFX();
+
         Collider[] enemiesHit = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
 
         foreach (Collider enemy in enemiesHit)

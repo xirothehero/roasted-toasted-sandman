@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2651543643761804603}
   - component: {fileID: 6161382270139752585}
   - component: {fileID: 8933676098962786572}
+  - component: {fileID: 3132048993976954155}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -146,6 +147,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theCamera: {fileID: 0}
+--- !u!95 &3132048993976954155
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766817469845125916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf2385f7a2db9d44c846bbdb27ba08af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2910015988071999818
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +323,7 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: 53046a4f48a50f645aa0a8789a0beca7, type: 3}
   damageIndicator: {fileID: 4439749951724988091}
   mySpriteRender: {fileID: 2651543643761804603}
+  enemyAnimator: {fileID: 3132048993976954155}
 --- !u!54 &4635586653870261794
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -33,13 +33,13 @@ public class sEnemy : MonoBehaviour
     public Sprite idleSprite;
     public SpriteRenderer damageIndicator;
     public SpriteRenderer mySpriteRender;
+    public Animator enemyAnimator;
 
     //private BoxCollider myCollider;
    
     Transform thePlayer;
     bool atkCooldown = false;
     Quaternion orgWeaponRot;
-    Animator enemyAnimator;
     NavMeshAgent myAgent;
     Rigidbody rb;
 
@@ -49,7 +49,6 @@ public class sEnemy : MonoBehaviour
         //thePlayer = Gamemanager.instance.thePlayer.transform;
         myAgent = gameObject.GetComponent<NavMeshAgent>();
         rb = gameObject.GetComponent<Rigidbody>();
-        enemyAnimator = gameObject.GetComponent<Animator>();
         //myCollider = gameObject.GetComponent<BoxCollider>();
     }
 

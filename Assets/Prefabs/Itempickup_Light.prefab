@@ -951,7 +951,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67042ff02ec031845930d29bedbd79f6, type: 2}
+  - {fileID: 2100000, guid: 7370049c1a019c84d8dcda0aa2707a3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1041,9 +1041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587b157ac26c74c44ab6db0e6113de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
+  healthPickupAmount: 0
   spinSpeed: 50
   floatingSpeed: 0.5
-  sandGain: 5
   height: 1
 --- !u!1 &1813108449351468793
 GameObject:
@@ -1996,7 +1997,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67042ff02ec031845930d29bedbd79f6, type: 2}
+  - {fileID: 2100000, guid: 7370049c1a019c84d8dcda0aa2707a3b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

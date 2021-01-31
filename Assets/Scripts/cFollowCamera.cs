@@ -6,6 +6,6 @@ public class cFollowCamera : MonoBehaviour
 {
     void Update()
     {
-        transform.LookAt(Gamemanager.instance.mainCamera.transform.position);
+        transform.LookAt(Gamemanager.instance.mainCamera.transform.GetChild(0).localPosition);
     }
 }

@@ -10,7 +10,6 @@ public class Destructible : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             gameObject.SetActive(false);
             Instantiate(brokenObj, transform.position, transform.rotation);
-            print("FRACTURE!");
         }
     }
 

@@ -47,7 +47,7 @@ public class sCameraFollow : MonoBehaviour
             //}
 
             camRot.x += Input.GetAxis("Mouse Y") * inputSensitivity * Time.deltaTime;
-            camRot.y += Input.GetAxis("Mouse X") *inputSensitivity *Time.deltaTime;
+            camRot.y += Input.GetAxis("Mouse X") * inputSensitivity * Time.deltaTime;
 
             camRot.x = Mathf.Clamp(camRot.x, -turnAngleMinMax, turnAngleMinMax);
 

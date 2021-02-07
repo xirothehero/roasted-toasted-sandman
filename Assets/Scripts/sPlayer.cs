@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +6,10 @@ using UnityEngine.Rendering;
 
 public class sPlayer : MonoBehaviour
 {
+    // Health
+    // Movement
+    // Audio
+    // Attack
     public float health = 100;
     public float speed = 8;
     public int sand = 0;
@@ -62,11 +66,8 @@ public class sPlayer : MonoBehaviour
 
     private void Awake()
     {
-        //Debug.Log("Awaking");
-//         playerAnimator = gameObject.GetComponent<Animator>();
-//         playerRenderer = gameObject.GetComponent<SpriteRenderer>();
         rb = gameObject.GetComponent<Rigidbody>();
-        //myCollider = gameObject.GetComponent<BoxCollider>();
+ 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -111,9 +112,6 @@ public class sPlayer : MonoBehaviour
         {
             float zInput = Input.GetAxis("Vertical");
             float xInput = Input.GetAxis("Horizontal");
-
-            //transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, theCamera.localEulerAngles.y, transform.localEulerAngles.z);
-            //Debug.Log(transform.localEulerAngles.y);
 
             isMoving = false;
             float actualSpeed = speed;
@@ -297,7 +295,7 @@ public class sPlayer : MonoBehaviour
             return;
         }
 
-        Gizmos.DrawSphere(attackPoint.position, attackRange);
+        //Gizmos.DrawSphere(attackPoint.position, attackRange);
     }
     IEnumerator AttackCooldown()
     {
